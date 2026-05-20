@@ -1,6 +1,6 @@
 const HomePage = () => {
   return (
-  <div className='pt-28 ml-5 mr-5 flex flex-col justify-items-center gap-5'>
+  <div className='ml-5 mr-5 flex flex-col justify-items-center gap-5'>
     <div className="flex flex-row gap-5 items-stretch justify-items-center">
       <div className="bg-black border border-bordercolor p-10 flex-1">
         <h2 className="text-emerald">Stats - Books Read: In Progress</h2>

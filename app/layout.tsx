@@ -30,7 +30,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
     <html className={`${newsreader.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}>
       <body>
         <TopBar></TopBar>
-        <main>{children}</main>
+        <main className="pt-32">{children}</main>
       </body>
     </html>
   )
