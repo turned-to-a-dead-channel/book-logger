@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import TopBar from "./topbar";
 import { Newsreader, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -26,8 +27,9 @@ export const metadata: Metadata = {
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html>
+    <html className={`${newsreader.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}>
       <body>
+        <TopBar></TopBar>
         <main>{children}</main>
       </body>
     </html>
