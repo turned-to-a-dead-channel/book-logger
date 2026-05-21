@@ -19,10 +19,12 @@
   --plum-2: #a05fc4;
   --teal: #186e7c;
   --rose: #b8456b;
+  --surface: #181222;
   --border: #2a2238;
   --dark: #0c0a12;
   --light: #ece4d7;
   --wider-than-widest: 0.2em;
+  --textsmall: 10px;
 }
 
 @theme inline {
@@ -39,7 +41,9 @@
   --color-bordercolor: var(--border);
   --color-textdark: var(--dark);
   --color-textlight: var(--light);
+  --color-surface: #181222;
   --tracking-wider-than-widest: var(--wider-than-widest);
+  --text-textsmall: var(--textsmall);
 }
 
 @media (prefers-color-scheme: dark) {
