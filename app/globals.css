@@ -20,7 +20,7 @@
   --teal: #186e7c;
   --rose: #b8456b;
   --surface: #181222;
-  --border: #2a2238;
+  --edge: #2a2238;
   --dark: #0c0a12;
   --light: #ece4d7;
   --wider-than-widest: 0.2em;
@@ -38,12 +38,12 @@
   --color-amber: var(--amber);
   --color-amber-2: var(--amber-2);
   --color-muted: var(--muted);
-  --color-bordercolor: var(--border);
   --color-textdark: var(--dark);
   --color-textlight: var(--light);
-  --color-surface: #181222;
+  --color-surface: hsla(263, 31%, 10%, .37);
   --tracking-wider-than-widest: var(--wider-than-widest);
   --text-textsmall: var(--textsmall);
+  --color-edge: var(--edge);
 }
 
 @media (prefers-color-scheme: dark) {
