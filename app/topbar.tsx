@@ -1,8 +1,5 @@
 import Image from "next/image"
-
-const today = new Date().toLocaleDateString('en-US', {
-    year: 'numeric', month: 'long', day: 'numeric'
-});
+import { dates } from "@/lib/dates";
 
 const TopBar = () => {
     return (
@@ -15,7 +12,7 @@ const TopBar = () => {
                     <span className="ml-5 mt-2 font-serif align-middle text-textlight text-3xl">The </span> 
                     <span className="mt-2 font-serif align-middle text-amber text-3xl">&nbsp;Still </span> 
                     <span className="mt-2 font-serif align-middle text-textlight text-3xl">&nbsp;Room</span> 
-                    <span className="mt-2 ml-5 align-middle font-mono uppercase tracking-wider-than-widest text-xs text-muted">Personal Library &middot; { today }</span>
+                    <span className="mt-2 ml-5 align-middle font-mono uppercase tracking-wider-than-widest text-xs text-muted">Personal Library &middot; { dates.todayString }</span>
                 </div>
                 <div className="m-5">
                     <button className="bg-amber text-xs align-middle text-textdark px-4 py-2 hover:bg-amber-2 rounded-4xl cursor-pointer">
