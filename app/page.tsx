@@ -1,13 +1,32 @@
 import { ChevronUp, ChevronDown, Equal } from 'lucide-react';
 import { dates } from '@/lib/dates';
 import CalendarPanel from '@/components/calendar';
+import BooksThisYear from '@/components/booksthisyearstat';
+import { MonthData, PagesThisYear } from '@/components/pagesthisyear';
+import PagesThisYearStat from '@/components/pagesthisyearstat';
 
-const readBooks = 39;
-const goalBooks = 100;
-const readBooksCurrMonth = 10;
-const readBooksLastMonth = 10;
-const readBooksDiffMonth = readBooksCurrMonth - readBooksLastMonth;
-const pagesThisyear = 25000;
+const placeholderStatData = {
+  readBooks: 39,
+  goalBooks: 100,
+  readBooksCurrMonth: 10,
+  readBooksLastMonth: 12,
+  pagesThisYear: 25000,
+}
+
+const placeholderMonthlyPages: MonthData[] = [
+  { month: 'Jan', pages: 842, status: 'completed' },
+  { month: 'Feb', pages: 789, status: 'completed' },
+  { month: 'Mar', pages: 956, status: 'completed' },
+  { month: 'Apr', pages: 903, status: 'completed' },
+  { month: 'May', pages: 636, status: 'current' },
+  { month: 'Jun', pages: 0, status: 'upcoming' },
+  { month: 'Jul', pages: 0, status: 'upcoming' },
+  { month: 'Aug', pages: 0, status: 'upcoming' },
+  { month: 'Sep', pages: 0, status: 'upcoming' },
+  { month: 'Oct', pages: 0, status: 'upcoming' },
+  { month: 'Nov', pages: 0, status: 'upcoming' },
+  { month: 'Dec', pages: 0, status: 'upcoming' },
+];
 
 const placeholderBookData = {
   "2026-05-03": [
@@ -24,36 +43,29 @@ const placeholderBookData = {
     { id: "4", title: "Lapvona", cover: "https://covers.openlibrary.org/b/id/12782342-M.jpg" },
     { id: "5", title: "Homesick for Another World", cover: "https://covers.openlibrary.org/b/id/8395750-M.jpg" },
     { id: "6", title: "McGlue", cover: "https://covers.openlibrary.org/b/id/7887822-M.jpg" }
-  ]
+  ],
+  "2026-05-23": [
+    { id: "1", title: "Eileen", cover: "https://covers.openlibrary.org/b/id/8492671-M.jpg" },
+    { id: "2", title: "My Year of Rest and Relaxation", cover: "https://covers.openlibrary.org/b/id/8739105-M.jpg" }
+  ],
 };
 
 const HomePage = () => {
   return (
   <div className='ml-5 mr-5 flex flex-col justify-items-center gap-5'>
     <div className="flex flex-row gap-5 items-stretch justify-items-center">
-      <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
+      <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15">
         <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Books This Year</h4>
-        <div className="mt-5 ml-5 flex flex-row items-center">
-          <span className="text-5xl text-textlight font-serif">{ readBooks }</span>
-          <span className="text-muted ml-2 font-mono uppercase text-xs">&nbsp;of { goalBooks } goal</span>
-        </div>
-        <div className="flex flex-row mt-5">
-          {readBooksDiffMonth > 0 ? <ChevronUp className="w-4 h-4 text-emerald" /> : readBooksDiffMonth < 0 ? <ChevronDown className="w-4 h-4 text-oxblood" /> : <Equal className="w-4 h-4 text-amber" />}
-          <span className={`font-mono text-xs ${readBooksDiffMonth > 0 ? "text-emerald" : readBooksDiffMonth < 0 ? "text-oxblood" : "text-amber" }`}>
-            &nbsp;{ readBooksDiffMonth }&nbsp;
-          </span>
-            <span className="text-xs text-muted"> 
-              vs { dates.lastMonthString } { dates.currYearNumeric } &middot; { Math.floor((readBooks / goalBooks) * 100)}% of goal
-          </span>
-        </div>
+        <BooksThisYear data={ placeholderStatData } />
       </div>
-      <div className="bg-surface border border-edge rounded-lg p-5 flex-1" >
+      <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15">
         <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Pages This Year</h4>
+        <PagesThisYearStat />
       </div>
-      <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
+      <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15">
         <h2 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Stats - Daily Average: In Progress</h2>
       </div>
-      <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
+      <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15">
         <h2 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Stats - Current Streak: In Progress</h2>
       </div>
     </div>
@@ -62,7 +74,8 @@ const HomePage = () => {
         <h2 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Currently Reading: In Progress</h2>
       </div>
       <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-        <h2 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Pages This Year: In Progress</h2>
+        <h2 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">2026 &middot; Monthly Overview in Pages</h2>
+        <PagesThisYear data= { placeholderMonthlyPages } />
       </div>
     </div>
     <div className="flex flex-row gap-5 items-stretch justify-items-center">

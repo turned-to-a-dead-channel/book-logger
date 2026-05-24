@@ -3,7 +3,7 @@ import { dates } from "@/lib/dates";
 
 const TopBar = () => {
     return (
-        <nav className="fixed w-full z-50 border-b border-bordercolor bg-background/50 backdrop-blur-md flex">
+        <nav className="fixed w-full z-50 border-b border-edge bg-background/50 backdrop-blur-md flex">
             <div className="flex flex-row justify-between w-full items-center">
                 <div className='m-5 flex items-center'>
                     <div className="rounded-full overflow-hidden inline-flex w-10 h-10">
