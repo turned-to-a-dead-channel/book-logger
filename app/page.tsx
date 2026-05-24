@@ -3,6 +3,7 @@ import { dates } from '@/lib/dates';
 import CalendarPanel from '@/components/calendar';
 import BooksThisYear from '@/components/booksthisyearstat';
 import { MonthData, PagesThisYear } from '@/components/pagesthisyear';
+import { BookData, CurrentlyReading } from '@/components/currentlyreading';
 import PagesThisYearStat from '@/components/pagesthisyearstat';
 
 const placeholderStatData = {
@@ -12,6 +13,22 @@ const placeholderStatData = {
   readBooksLastMonth: 12,
   pagesThisYear: 25000,
 }
+
+const placeholderCurrentlyReading: BookData[] = [
+  { title: "Eileen", 
+    author: "Ottessa Moshfegh", 
+    status: "currently reading", 
+    currentPage: 124, 
+    totalPages: 250, 
+    cover: 'https://covers.openlibrary.org/b/id/8492671-M.jpg',
+    beginDate: new Date("2026-05-22"),
+    quotes: [
+      "People truly engaged in life have messy houses.", 
+      "I couldn't be bothered to deal with fixing things. I preferred to wallow in the problem, dream of better days.",
+      "“Here is how I spend my days now. I live in a beautiful place. I sleep in a beautiful bed. I eat beautiful food. I go for walks through beautiful places. I care for people deeply. At night my bed is full of love, because I alone am in it. I cry easily, from pain and pleasure, and I don’t apologize for that. In the mornings I step outside and I’m thankful for another day. It took me many years to arrive at such a life."
+    ]
+  },
+]
 
 const placeholderMonthlyPages: MonthData[] = [
   { month: 'Jan', pages: 842, status: 'completed' },
@@ -71,7 +88,8 @@ const HomePage = () => {
     </div>
     <div className="flex flex-row gap-5 items-stretch justify-items-center">
       <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-        <h2 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Currently Reading: In Progress</h2>
+        <h2 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Currently Reading</h2>
+        <CurrentlyReading data = { placeholderCurrentlyReading } />
       </div>
       <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
         <h2 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">2026 &middot; Monthly Overview in Pages</h2>
