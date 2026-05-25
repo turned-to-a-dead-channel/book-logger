@@ -77,7 +77,7 @@ const CalendarPanel = ({ data }: { data: CalendarData }) => {
 
                             {/* Display a badge if day contains more than 4 books */}
                             { dayBooks.length > 4 && (
-                                <span className="absolute bottom-1 right-1 text-xs bg-emerald px-1 rounded">
+                                <span className="absolute bottom-1 right-1 text-xs bg-oxblood px-1 rounded">
                                     +{dayBooks.length - 4}
                                 </span>
                             )}

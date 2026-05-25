@@ -5,13 +5,21 @@ import BooksThisYear from '@/components/booksthisyearstat';
 import { MonthData, PagesThisYear } from '@/components/pagesthisyear';
 import { BookData, CurrentlyReading } from '@/components/currentlyreading';
 import PagesThisYearStat from '@/components/pagesthisyearstat';
+import DailyAverageStat from '@/components/dailyaveragestat';
+import CurrentStreak from '@/components/currentstreak';
 
 const placeholderStatData = {
   readBooks: 39,
   goalBooks: 100,
   readBooksCurrMonth: 10,
   readBooksLastMonth: 12,
-  pagesThisYear: 25000,
+  pagesThisYear: 2000,
+  pagesLastYear: 1500,
+  thirtyDayAvg: 50,
+  currentStreak: 10,
+  bestStreak: 20,
+  bestStreakMonth: "October",
+  bestStreakYear: 2024
 }
 
 const placeholderCurrentlyReading: BookData[] = [
@@ -20,7 +28,7 @@ const placeholderCurrentlyReading: BookData[] = [
     status: "currently reading", 
     currentPage: 124, 
     totalPages: 250, 
-    cover: 'https://covers.openlibrary.org/b/id/8492671-M.jpg',
+    cover: 'https://covers.openlibrary.org/b/id/0014630300-M.jpg',
     beginDate: new Date("2026-05-22"),
     quotes: [
       "People truly engaged in life have messy houses.", 
@@ -47,23 +55,23 @@ const placeholderMonthlyPages: MonthData[] = [
 
 const placeholderBookData = {
   "2026-05-03": [
-    { id: "1", title: "Eileen", cover: "https://covers.openlibrary.org/b/id/8492671-M.jpg" },
-    { id: "2", title: "My Year of Rest and Relaxation", cover: "https://covers.openlibrary.org/b/id/8739105-M.jpg" }
+    { id: "1", title: "Eileen", cover: "https://covers.openlibrary.org/b/id/0014630300-M.jpg" },
+    { id: "2", title: "My Year of Rest and Relaxation", cover: "https://covers.openlibrary.org/b/id/0014605019-M.jpg" }
   ],
   "2026-05-04": [
-    { id: "1", title: "Eileen", cover: "https://covers.openlibrary.org/b/id/8492671-M.jpg" },
-    { id: "2", title: "My Year of Rest and Relaxation", cover: "https://covers.openlibrary.org/b/id/8739105-M.jpg" }
+    { id: "1", title: "Eileen", cover: "https://covers.openlibrary.org/b/id/0014630300-M.jpg" },
+    { id: "2", title: "My Year of Rest and Relaxation", cover: "https://covers.openlibrary.org/b/id/0014605019-M.jpg" }
   ],
   "2026-05-08": [
-    { id: "1", title: "Eileen", cover: "https://covers.openlibrary.org/b/id/8492671-M.jpg" },
-    { id: "3", title: "Death in Her Hands", cover: "https://covers.openlibrary.org/b/id/10387071-M.jpg" },
-    { id: "4", title: "Lapvona", cover: "https://covers.openlibrary.org/b/id/12782342-M.jpg" },
-    { id: "5", title: "Homesick for Another World", cover: "https://covers.openlibrary.org/b/id/8395750-M.jpg" },
-    { id: "6", title: "McGlue", cover: "https://covers.openlibrary.org/b/id/7887822-M.jpg" }
+    { id: "1", title: "Eileen", cover: "https://covers.openlibrary.org/b/id/0014630300-M.jpg" },
+    { id: "2", title: "McGlue", cover: "https://covers.openlibrary.org/b/id/0008806923-M.jpg" },
+    { id: "4", title: "Lapvona", cover: "https://covers.openlibrary.org/b/id/15171235-M.jpg" },
+    { id: "5", title: "Homesick for Another World", cover: "https://covers.openlibrary.org/b/id/0008043774-M.jpg" },
+    { id: "6", title: "Death in Her Hands", cover: "https://covers.openlibrary.org/b/id/10387071-M.jpg" },
   ],
   "2026-05-23": [
-    { id: "1", title: "Eileen", cover: "https://covers.openlibrary.org/b/id/8492671-M.jpg" },
-    { id: "2", title: "My Year of Rest and Relaxation", cover: "https://covers.openlibrary.org/b/id/8739105-M.jpg" }
+    { id: "1", title: "Eileen", cover: "https://covers.openlibrary.org/b/id/0014630300-M.jpg" },
+    { id: "2", title: "My Year of Rest and Relaxation", cover: "https://covers.openlibrary.org/b/id/0014605019-M.jpg" }
   ],
 };
 
@@ -77,50 +85,52 @@ const HomePage = () => {
       </div>
       <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15">
         <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Pages This Year</h4>
-        <PagesThisYearStat />
+        <PagesThisYearStat data={ placeholderStatData } />
       </div>
       <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15">
-        <h2 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Stats - Daily Average: In Progress</h2>
+        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Daily Average</h4>
+        <DailyAverageStat data={ placeholderStatData } />
       </div>
       <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15">
-        <h2 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Stats - Current Streak: In Progress</h2>
+        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Current Streak</h4>
+        <CurrentStreak data={ placeholderStatData } />
       </div>
     </div>
     <div className="flex flex-row gap-5 items-stretch justify-items-center">
       <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-        <h2 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Currently Reading</h2>
+        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Currently Reading</h4>
         <CurrentlyReading data = { placeholderCurrentlyReading } />
       </div>
       <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-        <h2 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">2026 &middot; Monthly Overview in Pages</h2>
+        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">2026 &middot; Monthly Overview in Pages</h4>
         <PagesThisYear data= { placeholderMonthlyPages } />
       </div>
     </div>
     <div className="flex flex-row gap-5 items-stretch justify-items-center">
       <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-        <h2 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">
+        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">
           { dates.currMonthString } { dates.currYearNumeric } Overview
-        </h2>
+        </h4>
         <CalendarPanel data={ placeholderBookData } />
       </div>
       <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-        <h2 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Favorites: In Progress</h2>
+        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Favorites: In Progress</h4>
       </div>
     </div>
     <div className="flex flex-row gap-5 items-stretch justify-items-center">
       <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-        <h2 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">The Shelves: In Progress</h2>
+        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">The Shelves: In Progress</h4>
       </div>
       <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-        <h2 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">The Numbers: In Progress</h2>
+        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">The Numbers: In Progress</h4>
       </div>
     </div>
     <div className="flex flex-row gap-5 items-stretch justify-items-center">
       <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-        <h2 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Reading Log: In Progress</h2>
+        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Reading Log: In Progress</h4>
       </div>
       <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-        <h2 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Up next: In Progress</h2>
+        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Up next: In Progress</h4>
       </div>
     </div>
   </div>
