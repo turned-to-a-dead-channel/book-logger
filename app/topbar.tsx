@@ -1,5 +1,7 @@
 import Image from "next/image"
 import { dates } from "@/lib/dates";
+import { CircleStar } from 'lucide-react';
+
 
 const TopBar = () => {
     return (
@@ -14,10 +16,11 @@ const TopBar = () => {
                     <span className="mt-2 font-serif align-middle text-textlight text-3xl">&nbsp;Room</span> 
                     <span className="mt-2 ml-5 align-middle font-mono uppercase tracking-wider-than-widest text-xs text-muted">Personal Library &middot; { dates.todayString }</span>
                 </div>
-                <div className="m-5">
-                    <button className="bg-amber text-xs align-middle text-textdark px-4 py-2 hover:bg-amber-2 rounded-4xl cursor-pointer">
+                <div className="m-5 flex flex-row">
+                    <button className="bg-amber-500 text-xs align-middle text-textdark px-4 py-2 hover:bg-amber-400 rounded-4xl cursor-pointer transition-colors duration:300">
                         + Log Session
                     </button>
+                    <CircleStar className="h-8 w-8 ml-5 hover:text-amber-400 transition-colors duration-300" />
                 </div>
             </div>
         </nav>

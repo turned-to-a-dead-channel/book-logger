@@ -1,9 +1,11 @@
+"use client";
+import { useState, useEffect } from "react";
 import { dates } from "@/lib/dates";
 
 export interface BookData {
     title: string,
     author: string,
-    status: "to read" | "currently reading" | "completed", 
+    status: "to read" | "currently reading" | "completed",
     currentPage?: number,
     totalPages: number,
     publisher?: string
@@ -17,11 +19,14 @@ export interface BookData {
 
 export const CurrentlyReading = ({ data } : { data: BookData[] }) => {
     const { author, title, cover, currentPage, totalPages, quotes, beginDate } = data[0];
-    let randomQuote, daysSince;
-    
-    if (quotes) {
-        randomQuote = quotes.length > 1 ? quotes[Math.floor(Math.random() * quotes.length)] : quotes[0];
-    }
+    const [randomQuote, setRandomQuote] = useState<string | undefined>(undefined);
+    let daysSince;
+
+    useEffect(() => {
+        if (quotes) {
+            setRandomQuote(quotes.length > 1 ? quotes[Math.floor(Math.random() * quotes.length)] : quotes[0]);
+        }
+    }, []);
 
     if (beginDate) {
         daysSince = Math.floor((dates.todayRaw.getTime() - new Date(beginDate!).getTime()) / (1000 * 60 * 60 * 24));

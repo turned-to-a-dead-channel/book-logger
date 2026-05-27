@@ -1,4 +1,4 @@
-import { ChevronUp, ChevronDown, Equal } from 'lucide-react';
+"use client";
 import { dates } from '@/lib/dates';
 import CalendarPanel from '@/components/calendar';
 import BooksThisYear from '@/components/booksthisyearstat';
@@ -7,6 +7,7 @@ import { BookData, CurrentlyReading } from '@/components/currentlyreading';
 import PagesThisYearStat from '@/components/pagesthisyearstat';
 import DailyAverageStat from '@/components/dailyaveragestat';
 import CurrentStreak from '@/components/currentstreak';
+import { useRouter } from 'next/navigation';
 
 const placeholderStatData = {
   readBooks: 39,
@@ -76,64 +77,65 @@ const placeholderBookData = {
 };
 
 const HomePage = () => {
+  const router = useRouter();
   return (
-  <div className='ml-5 mr-5 flex flex-col justify-items-center gap-5'>
-    <div className="flex flex-row gap-5 items-stretch justify-items-center">
-      <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15">
-        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Books This Year</h4>
-        <BooksThisYear data={ placeholderStatData } />
+    <div className='ml-5 mr-5 flex flex-col justify-items-center gap-5'>
+      <div className="flex flex-row gap-5 items-stretch justify-items-center">
+        <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15" onClick={() => router.replace("/books")}>
+          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Books This Year</h4>
+          <BooksThisYear data={ placeholderStatData } />
+        </div>
+        <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15">
+          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Pages This Year</h4>
+          <PagesThisYearStat data={ placeholderStatData } />
+        </div>
+        <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15">
+          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Daily Average</h4>
+          <DailyAverageStat data={ placeholderStatData } />
+        </div>
+        <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15">
+          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Current Streak</h4>
+          <CurrentStreak data={ placeholderStatData } />
+        </div>
       </div>
-      <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15">
-        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Pages This Year</h4>
-        <PagesThisYearStat data={ placeholderStatData } />
+      <div className="flex flex-row gap-5 items-stretch justify-items-center">
+        <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
+          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Currently Reading</h4>
+          <CurrentlyReading data = { placeholderCurrentlyReading } />
+        </div>
+        <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
+          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">2026 &middot; Monthly Overview in Pages</h4>
+          <PagesThisYear data= { placeholderMonthlyPages } />
+        </div>
       </div>
-      <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15">
-        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Daily Average</h4>
-        <DailyAverageStat data={ placeholderStatData } />
+      <div className="flex flex-row gap-5 items-stretch justify-items-center">
+        <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
+          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">
+            { dates.currMonthString } { dates.currYearNumeric } Overview
+          </h4>
+          <CalendarPanel data={ placeholderBookData } />
+        </div>
+        <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
+          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Favorites: In Progress</h4>
+        </div>
       </div>
-      <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15">
-        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Current Streak</h4>
-        <CurrentStreak data={ placeholderStatData } />
+      <div className="flex flex-row gap-5 items-stretch justify-items-center">
+        <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
+          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">The Shelves: In Progress</h4>
+        </div>
+        <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
+          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">The Numbers: In Progress</h4>
+        </div>
+      </div>
+      <div className="flex flex-row gap-5 items-stretch justify-items-center">
+        <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
+          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Reading Log: In Progress</h4>
+        </div>
+        <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
+          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Up next: In Progress</h4>
+        </div>
       </div>
     </div>
-    <div className="flex flex-row gap-5 items-stretch justify-items-center">
-      <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Currently Reading</h4>
-        <CurrentlyReading data = { placeholderCurrentlyReading } />
-      </div>
-      <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">2026 &middot; Monthly Overview in Pages</h4>
-        <PagesThisYear data= { placeholderMonthlyPages } />
-      </div>
-    </div>
-    <div className="flex flex-row gap-5 items-stretch justify-items-center">
-      <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">
-          { dates.currMonthString } { dates.currYearNumeric } Overview
-        </h4>
-        <CalendarPanel data={ placeholderBookData } />
-      </div>
-      <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Favorites: In Progress</h4>
-      </div>
-    </div>
-    <div className="flex flex-row gap-5 items-stretch justify-items-center">
-      <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">The Shelves: In Progress</h4>
-      </div>
-      <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">The Numbers: In Progress</h4>
-      </div>
-    </div>
-    <div className="flex flex-row gap-5 items-stretch justify-items-center">
-      <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Reading Log: In Progress</h4>
-      </div>
-      <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-        <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Up next: In Progress</h4>
-      </div>
-    </div>
-  </div>
 )};
 
 export default HomePage;
