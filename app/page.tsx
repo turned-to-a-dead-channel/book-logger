@@ -8,6 +8,7 @@ import PagesThisYearStat from '@/components/pagesthisyearstat';
 import DailyAverageStat from '@/components/dailyaveragestat';
 import CurrentStreak from '@/components/currentstreak';
 import { useRouter } from 'next/navigation';
+import { useState, useEffect } from "react";
 
 const placeholderStatData = {
   readBooks: 39,
@@ -78,6 +79,17 @@ const placeholderBookData = {
 
 const HomePage = () => {
   const router = useRouter();
+
+  const [user, setUser] = useState<any>(null)
+
+  useEffect(() => {
+    fetch('/api/users')
+      .then(res => res.json())
+      .then(data => setUser(data))
+  }, [])
+
+  fetch(`/api/books/${user.uid}`);
+
   return (
     <div className='ml-5 mr-5 flex flex-col justify-items-center gap-5'>
       <div className="flex flex-row gap-5 items-stretch justify-items-center">
