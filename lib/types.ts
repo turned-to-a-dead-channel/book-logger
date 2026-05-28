@@ -9,6 +9,19 @@ export interface BookData {
   currentStreak?: number,
   bestStreak?: number,
   bestStreakMonth?: string,
-  bestStreakYear?: number
+  bestStreakYear?: number,
 }
 
+export interface BooksThisYearData {
+  finishedReading: any[],
+  finishedThisYear: any[],
+  finishedByThisTimeLastYear: any[],
+  finishedThisMonth: any[],
+  finishedLastMonth: any[],
+  goalBooks: number
+}
+
+export interface PagesData {
+  pagesThisYear: number,
+  pagesLastYear?: number
+}

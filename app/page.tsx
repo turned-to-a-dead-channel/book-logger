@@ -1,13 +1,12 @@
 "use client";
-import { dates } from '@/lib/dates';
 import CalendarPanel from '@/components/calendar';
 import BooksThisYear from '@/components/booksthisyearstat';
 import { MonthData, PagesThisYear } from '@/components/pagesthisyear';
-import { BookData, CurrentlyReading } from '@/components/currentlyreading';
+import { CurrentlyReading } from '@/components/currentlyreading';
 import PagesThisYearStat from '@/components/pagesthisyearstat';
 import DailyAverageStat from '@/components/dailyaveragestat';
 import CurrentStreak from '@/components/currentstreak';
-import { useRouter } from 'next/navigation';
+import { dates } from '@/lib/dates';
 import { useState, useEffect } from "react";
 
 const placeholderStatData = {
@@ -24,21 +23,6 @@ const placeholderStatData = {
   bestStreakYear: 2024
 }
 
-const placeholderCurrentlyReading: BookData[] = [
-  { title: "Eileen", 
-    author: "Ottessa Moshfegh", 
-    status: "currently reading", 
-    currentPage: 124, 
-    totalPages: 250, 
-    cover: 'https://covers.openlibrary.org/b/id/0014630300-M.jpg',
-    beginDate: new Date("2026-05-22"),
-    quotes: [
-      "People truly engaged in life have messy houses.", 
-      "I couldn't be bothered to deal with fixing things. I preferred to wallow in the problem, dream of better days.",
-      "“Here is how I spend my days now. I live in a beautiful place. I sleep in a beautiful bed. I eat beautiful food. I go for walks through beautiful places. I care for people deeply. At night my bed is full of love, because I alone am in it. I cry easily, from pain and pleasure, and I don’t apologize for that. In the mornings I step outside and I’m thankful for another day. It took me many years to arrive at such a life."
-    ]
-  },
-]
 
 const placeholderMonthlyPages: MonthData[] = [
   { month: 'Jan', pages: 842, status: 'completed' },
@@ -78,60 +62,77 @@ const placeholderBookData = {
 };
 
 const HomePage = () => {
-  const router = useRouter();
-
   const [user, setUser] = useState<any>(null)
+  const [books, setBooks] = useState<any[]>([])
 
   useEffect(() => {
     fetch('/api/users')
       .then(res => res.json())
-      .then(data => setUser(data))
+      .then(data => {
+        setUser(data)
+        return fetch(`/api/books/${data.user_uid}`)
+      })
+      .then(res => res.json())
+      .then(data => setBooks(data))
   }, [])
 
-  fetch(`/api/books/${user.uid}`);
+  const goalBooks = user?.goal_books;
+  const currentlyReading = books.filter(b => b.status === 'currently reading');
 
+  {/* ***** FINISHED LOGIC ************************************************************************ */}
+  const finishedReading = books.filter(b => b.status === 'finished');
+
+  const finishedThisYear = books.filter(b => {
+    if (!b.date_finished) return false
+    return b.status === 'finished' && b.date_finished.includes(dates.currYearNumeric)
+  })
+
+  const finishedByThisTimeLastYear = books.filter(b => {
+    if (!b.date_finished) return false
+    const finished = new Date(b.date_finished)
+    return finished >= new Date(dates.todayRaw.getFullYear() - 1, 0, 1) && finished <= dates.lastYearSameDayRaw
+  })
+
+  const finishedLastMonth = books.filter(b => {
+    if (!b.date_finished) return false
+    const finished = new Date(b.date_finished)
+    return finished >= dates.lastMonthStartRaw && finished <= dates.lastMonthEndRaw
+  })
+
+  const finishedThisMonth = books.filter(b => {
+    if (!b.date_finished) return false
+    const finished = new Date(b.date_finished)
+    return finished >= dates.currMonthStartRaw && finished <= dates.currMonthEndRaw
+  })
+
+
+  {/* ***** PAGES LOGIC *************************************************************************** */}
+  const pagesThisYear = finishedThisYear.reduce((sum, book) => sum + (book.page_count_override ?? book.page_count), 0);
+  const pagesLastYear = finishedByThisTimeLastYear.reduce((sum, book) => sum + (book.page_count_override ?? book.page_count), 0)
+
+    console.log("pagesThisyear: " + pagesThisYear);
   return (
-    <div className='ml-5 mr-5 flex flex-col justify-items-center gap-5'>
-      <div className="flex flex-row gap-5 items-stretch justify-items-center">
-        <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15" onClick={() => router.replace("/books")}>
-          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Books This Year</h4>
-          <BooksThisYear data={ placeholderStatData } />
-        </div>
-        <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15">
-          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Pages This Year</h4>
-          <PagesThisYearStat data={ placeholderStatData } />
-        </div>
-        <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15">
-          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Daily Average</h4>
-          <DailyAverageStat data={ placeholderStatData } />
-        </div>
-        <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15">
-          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Current Streak</h4>
-          <CurrentStreak data={ placeholderStatData } />
-        </div>
+    <div className='ml-5 mr-5 flex flex-col justify-center gap-5'>
+      <div className="flex flex-row gap-5 items-stretch justify-center">
+        <BooksThisYear data={{ finishedReading, finishedThisYear, finishedByThisTimeLastYear, finishedThisMonth, finishedLastMonth, goalBooks }} />
+        <PagesThisYearStat data={{ pagesThisYear, pagesLastYear }} />
+        <DailyAverageStat data={ placeholderStatData } />
+        <CurrentStreak data={ placeholderStatData } />
       </div>
-      <div className="flex flex-row gap-5 items-stretch justify-items-center">
-        <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Currently Reading</h4>
-          <CurrentlyReading data = { placeholderCurrentlyReading } />
-        </div>
-        <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">2026 &middot; Monthly Overview in Pages</h4>
-          <PagesThisYear data= { placeholderMonthlyPages } />
-        </div>
+      
+      <div className="flex flex-row gap-5 items-stretch justify-center">
+        <CurrentlyReading data = { currentlyReading } />
+        <PagesThisYear data= { placeholderMonthlyPages } />
       </div>
-      <div className="flex flex-row gap-5 items-stretch justify-items-center">
-        <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">
-            { dates.currMonthString } { dates.currYearNumeric } Overview
-          </h4>
-          <CalendarPanel data={ placeholderBookData } />
-        </div>
+
+      <div className="flex flex-row gap-5 items-stretch justify-center">
+        <CalendarPanel data={ placeholderBookData } />
+
         <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
           <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Favorites: In Progress</h4>
         </div>
       </div>
-      <div className="flex flex-row gap-5 items-stretch justify-items-center">
+      <div className="flex flex-row gap-5 items-stretch justify-center">
         <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
           <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">The Shelves: In Progress</h4>
         </div>
@@ -139,7 +140,7 @@ const HomePage = () => {
           <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">The Numbers: In Progress</h4>
         </div>
       </div>
-      <div className="flex flex-row gap-5 items-stretch justify-items-center">
+      <div className="flex flex-row gap-5 items-stretch justify-center">
         <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
           <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Reading Log: In Progress</h4>
         </div>
