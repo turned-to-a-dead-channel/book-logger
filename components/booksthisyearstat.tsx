@@ -21,11 +21,16 @@ const BooksThisYear = ({ data } : { data: BooksThisYearData } ) => {
                     <span className={`${selected === "year" ? "text-amber-500" : "text-muted" } text-textsmall uppercase cursor-pointer`} onClick={() => setSelected("year")}>Year</span>
                 </div>
             </div>
-            <div className="mt-5 ml-5 flex flex-row items-center">
-                { selected === "year" ?  <div><span className="text-5xl text-textlight font-serif">{ finishedThisYear.length }</span>  
-                <span className="text-muted ml-2 font-mono uppercase text-xs">&nbsp;of { goalBooks } goal</span></div> : <div>
-                <span className="text-5xl text-textlight font-serif">{ finishedThisMonth.length }</span><span className="text-muted ml-2 font-mono uppercase text-xs">&nbsp;of { Math.round((goalBooks - finishedThisYear.length)/(12 - dates.currMonthRaw)) } goal</span></div> } 
-            </div>
+            { selected === "year" ?  
+                <div className="mt-5 ml-5 flex flex-row items-center">
+                    <span className="text-5xl text-textlight font-serif">{ finishedThisYear.length }</span>  
+                    <span className="text-muted ml-2 font-mono uppercase text-xs">&nbsp;of { goalBooks } goal</span>
+                </div> : 
+                <div className="mt-5 ml-5 flex flex-row items-center">
+                    <span className="text-5xl text-textlight font-serif">{ finishedThisMonth.length }</span>
+                    <span className="text-muted ml-2 font-mono uppercase text-xs">&nbsp;of { Math.round((goalBooks - finishedThisYear.length)/(12 - dates.currMonthRaw)) } goal</span>
+                </div> 
+            } 
             <div className="flex flex-row mt-5">
                 { selected === "year" ? 
                     <span className="text-xs text-muted"> 
