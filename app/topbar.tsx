@@ -17,6 +17,9 @@ const TopBar = () => {
                     <span className="mt-2 ml-5 align-middle font-mono uppercase tracking-wider-than-widest text-xs text-muted">Personal Library &middot; { dates.todayString }</span>
                 </div>
                 <div className="m-5 flex flex-row">
+                    <button className="bg-teal-600 text-xs align-middle text-textdark px-4 py-2 hover:bg-teal-500 rounded-4xl cursor-pointer transition-colors duration:300 mr-5">
+                        + Add Book
+                    </button>
                     <button className="bg-amber-500 text-xs align-middle text-textdark px-4 py-2 hover:bg-amber-400 rounded-4xl cursor-pointer transition-colors duration:300">
                         + Log Session
                     </button>

@@ -13,6 +13,7 @@ export const dates = {
     todayString: today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
     currMonthString: today.toLocaleDateString('en-US', { month: 'long' }),
     currMonthNumeric: today.toLocaleDateString('en-US', { month: 'numeric' }),
+    currMonthRaw: today.getMonth(),
     currMonthStartRaw: currMonthStart,
     currMonthEndRaw: currMonthEnd,
     lastMonthString: lastMonth.toLocaleDateString('en-US', { month: 'long'}),
