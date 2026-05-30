@@ -1,7 +1,7 @@
 "use client";
 import CalendarPanel from '@/components/calendar';
 import BooksThisYear from '@/components/booksthisyearstat';
-import { MonthData, PagesThisYear } from '@/components/pagesthisyear';
+import { MonthData, MonthlyOverview } from '@/components/monthlyoverview';
 import { CurrentlyReading } from '@/components/currentlyreading';
 import PagesThisYearStat from '@/components/pagesthisyearstat';
 import DailyAverageStat from '@/components/dailyaveragestat';
@@ -107,22 +107,39 @@ const HomePage = () => {
 
 
   {/* ***** PAGES LOGIC *************************************************************************** */}
-  const pagesThisYear = finishedThisYear.reduce((sum, book) => sum + (book.page_count_override ?? book.page_count), 0);
+  const pagesThisYear = finishedThisYear.reduce((sum, book) => sum + (book.page_count_override ?? book.page_count), 0) + currentlyReading.reduce((sum, book) => sum + (book.page_count_override ?? book.page_count), 0);
+  const pagesThisMonth = finishedThisMonth.reduce((sum, book) => sum + (book.page_count_override ?? book.page_count), 0)
+    + currentlyReading.reduce((sum, book) => sum + (book.current_page ?? 0), 0);
   const pagesLastYear = finishedByThisTimeLastYear.reduce((sum, book) => sum + (book.page_count_override ?? book.page_count), 0)
 
-    console.log("pagesThisyear: " + pagesThisYear);
+  {/* ***** MONTHLY LOGIC ************************************************************************* */}
+  const monthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const currMonthIndex = dates.todayRaw.getMonth();
+  const monthlyData: MonthData[] = monthLabels.map((month, i) => {
+    const booksThisMonth = finishedThisYear.filter(b => new Date(b.date_finished).getMonth() === i);
+    
+    const status: "completed" | "current" | "upcoming" = i < currMonthIndex ? "completed" : i === currMonthIndex ? "current" : "upcoming";
+    
+    return {
+      month,
+      pages: booksThisMonth.reduce((sum, b) => sum + (b.page_count_override ?? b.page_count), 0),
+      books: booksThisMonth.length,
+      status,
+    };
+  });
+
   return (
     <div className='ml-5 mr-5 flex flex-col justify-center gap-5'>
       <div className="flex flex-row gap-5 items-stretch justify-center">
         <BooksThisYear data={{ finishedReading, finishedThisYear, finishedByThisTimeLastYear, finishedThisMonth, finishedLastMonth, goalBooks }} />
         <PagesThisYearStat data={{ pagesThisYear, pagesLastYear }} />
-        <DailyAverageStat data={ placeholderStatData } />
+        <DailyAverageStat data={{ pagesThisMonth, pagesThisYear }} />
         <CurrentStreak data={ placeholderStatData } />
       </div>
       
       <div className="flex flex-row gap-5 items-stretch justify-center">
         <CurrentlyReading data = { currentlyReading } />
-        <PagesThisYear data= { placeholderMonthlyPages } />
+        <MonthlyOverview data= { monthlyData } />
       </div>
 
       <div className="flex flex-row gap-5 items-stretch justify-center">

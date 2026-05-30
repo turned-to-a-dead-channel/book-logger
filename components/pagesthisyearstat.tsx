@@ -8,7 +8,7 @@ const PagesThisYearStat = ({ data } : { data: PagesData }) => {
     const yearToYearDiff = (!pagesThisYear && !pagesLastYear) ? 0
     : !pagesLastYear ? pagesThisYear
     : !pagesThisYear ? -pagesLastYear
-    : pagesThisYear - pagesLastYear;
+    : pagesThisYear - pagesLastYear
     const yearToYearComp = pagesLastYear ? Math.round(yearToYearDiff / pagesLastYear * 100) : 0;
 
     return (

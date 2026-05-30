@@ -23,5 +23,6 @@ export interface BooksThisYearData {
 
 export interface PagesData {
   pagesThisYear: number,
-  pagesLastYear?: number
+  pagesLastYear?: number,
+  pagesThisMonth?: number
 }
