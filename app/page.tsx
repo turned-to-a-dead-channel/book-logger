@@ -136,6 +136,7 @@ const HomePage = () => {
         <CalendarPanel data={ placeholderBookData } />
         <FavoritesPanel data = { displayedFavorites } />
       </div>
+      { /*
       <div className="flex flex-row flex-wrap gap-5 items-stretch justify-center">
         <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
           <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">The Shelves: In Progress</h4>
@@ -152,6 +153,7 @@ const HomePage = () => {
           <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Up next: In Progress</h4>
         </div>
       </div>
+      */}
     </div>
 )};
 
