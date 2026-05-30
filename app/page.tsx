@@ -64,10 +64,8 @@ const HomePage = () => {
   const goalBooks = user?.goal_books;
   const currentlyReading = books.filter(b => b.status === 'currently reading');
   const favorites = books.filter(b => b.is_favorite);
-  console.log(books);
   const displayedFavorites = favorites.length > 0 ? favorites : books.filter(b => b.rating == 5);
 
-  console.log(displayedFavorites);
 
   {/* ***** FINISHED LOGIC ************************************************************************ */}
   const finishedReading = books.filter(b => b.status === 'finished');
@@ -102,6 +100,7 @@ const HomePage = () => {
     + currentlyReading.reduce((sum, book) => sum + (book.current_page ?? 0), 0);
   const pagesLastYear = finishedByThisTimeLastYear.reduce((sum, book) => sum + (book.page_count_override ?? book.page_count), 0)
 
+  
   {/* ***** MONTHLY LOGIC ************************************************************************* */}
   const monthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const currMonthIndex = dates.todayRaw.getMonth();
