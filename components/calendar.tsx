@@ -36,7 +36,7 @@ const CalendarPanel = ({ data }: { data: CalendarData }) => {
     }, [monthStart, monthEnd]);
 
     return (
-        <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
+        <div className="bg-surface border border-edge rounded-lg p-5 flex-1 min-w-64">
             <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">
                 { dates.currMonthString } { dates.currYearNumeric } Overview
             </h4>

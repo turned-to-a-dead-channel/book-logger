@@ -58,7 +58,7 @@ export const CurrentlyReading = ({ data } : { data: BookData[] }) => {
     const author = books.author_override ?? books.author;
 
     return (
-        <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
+        <div className="bg-surface border border-edge rounded-lg p-5 flex-1 min-w-64">
                 <div className="flex flex-row justify-between">
                     <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Currently Reading</h4>
                     <div className='flex flex-row'>

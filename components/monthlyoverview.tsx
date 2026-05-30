@@ -16,7 +16,7 @@ export const MonthlyOverview = ({ data }: { data: MonthData[] }) => {
     const MIN_HEIGHT_PERCENT = 10;
 
     return (
-        <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
+        <div className="bg-surface border border-edge rounded-lg p-5 flex-1 min-w-64">
             <div className='flex flex-row justify-between'>
                 <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">2026 &middot; Monthly Overview in Numbers</h4>
                 <div className="flex flex-row gap-1">

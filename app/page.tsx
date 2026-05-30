@@ -5,7 +5,8 @@ import { MonthData, MonthlyOverview } from '@/components/monthlyoverview';
 import { CurrentlyReading } from '@/components/currentlyreading';
 import PagesThisYearStat from '@/components/pagesthisyearstat';
 import DailyAverageStat from '@/components/dailyaveragestat';
-import CurrentStreak from '@/components/currentstreak';
+import CurrentStreak from '@/components/currentstreakstat';
+import FavoritesPanel from '@/components/favorites';
 import { dates } from '@/lib/dates';
 import { useState, useEffect } from "react";
 
@@ -22,22 +23,6 @@ const placeholderStatData = {
   bestStreakMonth: "October",
   bestStreakYear: 2024
 }
-
-
-const placeholderMonthlyPages: MonthData[] = [
-  { month: 'Jan', pages: 842, status: 'completed' },
-  { month: 'Feb', pages: 789, status: 'completed' },
-  { month: 'Mar', pages: 956, status: 'completed' },
-  { month: 'Apr', pages: 903, status: 'completed' },
-  { month: 'May', pages: 636, status: 'current' },
-  { month: 'Jun', pages: 0, status: 'upcoming' },
-  { month: 'Jul', pages: 0, status: 'upcoming' },
-  { month: 'Aug', pages: 0, status: 'upcoming' },
-  { month: 'Sep', pages: 0, status: 'upcoming' },
-  { month: 'Oct', pages: 0, status: 'upcoming' },
-  { month: 'Nov', pages: 0, status: 'upcoming' },
-  { month: 'Dec', pages: 0, status: 'upcoming' },
-];
 
 const placeholderBookData = {
   "2026-05-03": [
@@ -78,6 +63,11 @@ const HomePage = () => {
 
   const goalBooks = user?.goal_books;
   const currentlyReading = books.filter(b => b.status === 'currently reading');
+  const favorites = books.filter(b => b.is_favorite);
+  console.log(books);
+  const displayedFavorites = favorites.length > 0 ? favorites : books.filter(b => b.rating == 5);
+
+  console.log(displayedFavorites);
 
   {/* ***** FINISHED LOGIC ************************************************************************ */}
   const finishedReading = books.filter(b => b.status === 'finished');
@@ -130,26 +120,23 @@ const HomePage = () => {
 
   return (
     <div className='ml-5 mr-5 flex flex-col justify-center gap-5'>
-      <div className="flex flex-row gap-5 items-stretch justify-center">
+      <div className="flex flex-row flex-wrap gap-5 items-stretch justify-center">
         <BooksThisYear data={{ finishedReading, finishedThisYear, finishedByThisTimeLastYear, finishedThisMonth, finishedLastMonth, goalBooks }} />
         <PagesThisYearStat data={{ pagesThisYear, pagesLastYear }} />
         <DailyAverageStat data={{ pagesThisMonth, pagesThisYear }} />
         <CurrentStreak data={ placeholderStatData } />
       </div>
-      
-      <div className="flex flex-row gap-5 items-stretch justify-center">
+
+      <div className="flex flex-row flex-wrap gap-5 items-stretch justify-center">
         <CurrentlyReading data = { currentlyReading } />
         <MonthlyOverview data= { monthlyData } />
       </div>
 
-      <div className="flex flex-row gap-5 items-stretch justify-center">
+      <div className="flex flex-row flex-wrap gap-5 items-stretch justify-center">
         <CalendarPanel data={ placeholderBookData } />
-
-        <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Favorites: In Progress</h4>
-        </div>
+        <FavoritesPanel data = { displayedFavorites } />
       </div>
-      <div className="flex flex-row gap-5 items-stretch justify-center">
+      <div className="flex flex-row flex-wrap gap-5 items-stretch justify-center">
         <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
           <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">The Shelves: In Progress</h4>
         </div>
@@ -157,7 +144,7 @@ const HomePage = () => {
           <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">The Numbers: In Progress</h4>
         </div>
       </div>
-      <div className="flex flex-row gap-5 items-stretch justify-center">
+      <div className="flex flex-row flex-wrap gap-5 items-stretch justify-center">
         <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
           <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Reading Log: In Progress</h4>
         </div>
