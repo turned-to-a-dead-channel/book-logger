@@ -12,7 +12,7 @@ const TopBar = () => {
                         <Image className="inline" src="/stillroom.png" alt="description" width={64} height={64} />
                     </div>
                     <span className="ml-5 mt-2 font-serif align-middle text-textlight text-3xl">The </span> 
-                    <span className="mt-2 font-serif align-middle text-amber text-3xl">&nbsp;Still </span> 
+                    <span className="mt-2 font-serif align-middle text-amber-500 text-3xl">&nbsp;Still </span> 
                     <span className="mt-2 font-serif align-middle text-textlight text-3xl">&nbsp;Room</span> 
                     <span className="mt-2 ml-5 align-middle font-mono uppercase tracking-wider-than-widest text-xs text-muted">Personal Library &middot; { dates.todayString }</span>
                 </div>

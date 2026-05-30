@@ -19,9 +19,9 @@ const PagesThisYearStat = ({ data } : { data: PagesData }) => {
                 <span className="text-muted ml-2 font-mono uppercase text-xs">&nbsp;Year to Date</span>
             </div>
             <div className="flex flex-row mt-5">
-                {yearToYearComp > 0 ? <ChevronUp className="w-4 h-4 text-emerald" /> : yearToYearComp < 0 ? <ChevronDown className="w-4 h-4 text-oxblood" /> : <Equal className="w-4 h-4 text-amber" />}
+                {yearToYearComp > 0 ? <ChevronUp className="w-4 h-4 text-emerald-500" /> : yearToYearComp < 0 ? <ChevronDown className="w-4 h-4 text-oxblood" /> : <Equal className="w-4 h-4 text-amber-500" />}
 
-                <span className={`font-mono text-xs ${yearToYearComp > 0 ? "text-emerald" : yearToYearComp < 0 ? "text-oxblood" : "text-amber" }`}>
+                <span className={`font-mono text-xs ${yearToYearComp > 0 ? "text-emerald-500" : yearToYearComp < 0 ? "text-oxblood" : "text-amber-500" }`}>
                     &nbsp;{ yearToYearComp }%&nbsp;
                 </span>
 

@@ -14,7 +14,7 @@ const CurrentStreak = ({ data } : { data : BookData }) => {
                 <span className="font-mono text-xs text-muted">
                     Best 
                 </span>
-                <span className="font-mono text-xs text-amber">
+                <span className="font-mono text-xs text-amber-500">
                     &nbsp;{ bestStreak } days 
                 </span>
                 <span className="font-mono text-xs text-muted">

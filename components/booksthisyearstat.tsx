@@ -41,8 +41,8 @@ const BooksThisYear = ({ data } : { data: BooksThisYearData } ) => {
                     </span>
                 }
 
-                {readBooksDiffMonth > 0 ? <ChevronUp className="w-4 h-4 text-emerald" /> : readBooksDiffMonth < 0 ? <ChevronDown className="w-4 h-4 text-oxblood" /> : <Equal className="w-4 h-4 text-amber" />}
-                <span className={`font-mono text-xs ${readBooksDiffMonth > 0 ? "text-emerald" : readBooksDiffMonth < 0 ? "text-oxblood" : "text-amber" }`}>
+                {readBooksDiffMonth > 0 ? <ChevronUp className="w-4 h-4 text-emerald-500" /> : readBooksDiffMonth < 0 ? <ChevronDown className="w-4 h-4 text-oxblood" /> : <Equal className="w-4 h-4 text-amber-500" />}
+                <span className={`font-mono text-xs ${readBooksDiffMonth > 0 ? "text-emerald-500" : readBooksDiffMonth < 0 ? "text-oxblood" : "text-amber-500" }`}>
                    { readBooksDiffMonth }&nbsp;
                 </span>
                 <span className="text-xs text-muted"> 

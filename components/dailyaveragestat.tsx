@@ -12,7 +12,7 @@ const DailyAverageStat = ({ data } : { data : PagesData }) => {
             <div className="flex flex-row mt-5">
 
 
-                <span className="font-mono text-xs text-amber">
+                <span className="font-mono text-xs text-amber-500">
                     = 
                 </span>
                 <span className="font-mono text-xs text-muted">
