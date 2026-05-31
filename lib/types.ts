@@ -26,3 +26,8 @@ export interface PagesData {
   pagesLastYear?: number,
   pagesThisMonth?: number
 }
+
+export type ModalProps = {
+  isOpen: boolean,
+  onClose: () => void
+}

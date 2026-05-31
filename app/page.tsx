@@ -7,8 +7,12 @@ import PagesThisYearStat from '@/components/pagesthisyearstat';
 import DailyAverageStat from '@/components/dailyaveragestat';
 import CurrentStreak from '@/components/currentstreakstat';
 import FavoritesPanel from '@/components/favorites';
+import { useModal } from '@/context/modalcontext';
 import { dates } from '@/lib/dates';
 import { useState, useEffect } from "react";
+
+// Move to context later
+import SessionModal from "@/components/modals/sessionlog";
 
 const placeholderStatData = {
   readBooks: 39,
@@ -49,6 +53,7 @@ const placeholderBookData = {
 const HomePage = () => {
   const [user, setUser] = useState<any>(null)
   const [books, setBooks] = useState<any[]>([])
+  const { isOpen, setIsOpen } = useModal();
 
   useEffect(() => {
     fetch('/api/users')
@@ -100,7 +105,7 @@ const HomePage = () => {
     + currentlyReading.reduce((sum, book) => sum + (book.current_page ?? 0), 0);
   const pagesLastYear = finishedByThisTimeLastYear.reduce((sum, book) => sum + (book.page_count_override ?? book.page_count), 0)
 
-  
+
   {/* ***** MONTHLY LOGIC ************************************************************************* */}
   const monthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const currMonthIndex = dates.todayRaw.getMonth();
@@ -153,6 +158,7 @@ const HomePage = () => {
         </div>
       </div>
       */}
+      <SessionModal isOpen={isOpen} onClose={() => setIsOpen(false)} currentlyReading={currentlyReading} />
     </div>
 )};
 
