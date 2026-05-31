@@ -1,15 +1,15 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from "next/image"
 import { CircleStar } from 'lucide-react';
 import { dates } from "@/lib/dates";
 import { useModal } from "@/context/modalcontext";
-import SessionModal from "@/components/modals/sessionlog";
 
 const TopBar = () => {
     const { isOpen, setIsOpen } = useModal();
+    const [dateString, setDateString] = useState('');
+    useEffect(() => { setDateString(dates.todayString) }, []);
     
-
     return (
         <>
             <nav className="fixed w-full z-50 border-b border-edge bg-background/50 backdrop-blur-md flex">
@@ -21,7 +21,7 @@ const TopBar = () => {
                         <span className="ml-5 mt-2 font-serif align-middle text-textlight text-3xl">The </span> 
                         <span className="mt-2 font-serif align-middle text-amber-500 text-3xl">&nbsp;Still </span> 
                         <span className="mt-2 font-serif align-middle text-textlight text-3xl">&nbsp;Room</span> 
-                        <span className="mt-2 ml-5 align-middle font-mono uppercase tracking-wider-than-widest text-xs text-muted">Personal Library &middot; { dates.todayString }</span>
+                        <span className="mt-2 ml-5 align-middle font-mono uppercase tracking-wider-than-widest text-xs text-muted">Personal Library &middot; { dateString }</span>
                     </div>
                     <div className="m-5 flex flex-row">
                         <button className="bg-teal-600 text-xs align-middle text-textdark px-4 py-2 hover:bg-teal-500 rounded-4xl cursor-pointer transition-colors duration:300 mr-5">

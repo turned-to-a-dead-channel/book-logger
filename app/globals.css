@@ -38,6 +38,7 @@
   --color-textdark: var(--dark);
   --color-textlight: var(--light);
   --color-surface: hsla(263, 31%, 10%, .37);
+  --color-surface-opaque: hsla(263, 31%, 10%, 1);
   --tracking-wider-than-widest: var(--wider-than-widest);
   --text-textsmall: var(--textsmall);
   --color-edge: var(--edge);
