@@ -8,6 +8,7 @@ const SessionModal = ({ isOpen, onClose, currentlyReading }: ModalProps & { curr
     const [selectedBook, setSelectedBook] = useState<any>(null);
     const [startPage, setStartPage] = useState<number>(selectedBook?.current_page ?? 0);
     const [endPage, setEndPage] = useState<number | null>(null);
+    const [quote, setQuote] = useState("");
     const pagesRead = endPage !== null ? endPage - startPage : null;
 
     useEffect(() => {
@@ -21,6 +22,7 @@ const SessionModal = ({ isOpen, onClose, currentlyReading }: ModalProps & { curr
     const handleClose = () => {
         setEndPage(null);
         setStartPage(selectedBook?.current_page ?? 0);
+        setQuote("");
         onClose();
     }
 
@@ -71,12 +73,20 @@ const SessionModal = ({ isOpen, onClose, currentlyReading }: ModalProps & { curr
                             )}                
 
                             <div className="ml-5 flex flex-col flex-1">
-                                <form>
+                                <form id="session-form" onSubmit={async (e) => {
+                                    e.preventDefault();
+                                    await fetch('/api/books_log', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ uid: selectedBook.user_books_uid, startPage, endPage, quote })
+                                    });
+                                    handleClose();
+                                }}>
                                     <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall mb-2">Book Details</h4>
                                     <h1 className="font-serif text-2xl">{title}</h1>
                                     <h3 className="mt-1 text-muted text-xs uppercase">{author} &middot; { totalPages } pages total</h3>
                                     <div className="mt-6 flex flex-row w-full justify-between">
-                                        <div className="lex flex-col">
+                                        <div className="flex flex-col">
                                             <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall mb-2">Last Stopped At Page {selectedBook?.current_page} of {selectedBook?.page_count}</h4>
                                             <input type="number" id="startPage" name="startPage" className="p-6 mt-2 min-w-12 text-2xl outline-1 outline-edge" value={startPage} 
                                             key={selectedBook?.user_books_uid} placeholder={`${selectedBook?.current_page}`} required onChange={(e) => setStartPage(Number(e.target.value))} 
@@ -93,7 +103,7 @@ const SessionModal = ({ isOpen, onClose, currentlyReading }: ModalProps & { curr
                                         <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall mb-2">Quote</h4>
                                         <h4 className="text-muted font-sans tracking-wider-than-widest text-textsmall mb-2">Optional</h4>
                                     </div>
-                                    <input type="text" name="currentPage" className="p-6 mt-2 w-full text-2xl outline-1 outline-edge" placeholder="To be or not to be..." />
+                                    <input type="text" name="quote" className="p-6 mt-2 w-full text-2xl outline-1 outline-edge" value={quote} placeholder="To be or not to be..." onChange={(e) => setQuote(e.target.value)}/>
 
                                 </form>
                             </div>
@@ -103,8 +113,8 @@ const SessionModal = ({ isOpen, onClose, currentlyReading }: ModalProps & { curr
                             <h4 className="mt-2 text-textlight font-mono uppercase tracking-wider-than-widest text-textsmall mb-2">Logging <span className="text-amber-500">{dates.todayString}</span> &middot; Session for <span className="text-amber-500">{ pagesRead }</span>&nbsp;pages</h4>
 
                             <div>
-                                <button className="mr-5 bg-surface-opaque border-muted text-s border border-muted align-middle text-muted px-5 py-3 hover:bg-zinc-800 rounded-4xl cursor-pointer transition-colors duration:300" onClick={handleClose}>Cancel</button>
-                                <button className="bg-amber-500 text-s align-middle text-textdark px-5 py-3 hover:bg-amber-400 rounded-4xl cursor-pointer transition-colors duration:300">
+                                <button className="mr-5 bg-surface-opaque text-s border border-muted align-middle text-muted px-5 py-3 hover:bg-zinc-800 rounded-4xl cursor-pointer transition-colors duration:300" onClick={handleClose}>Cancel</button>
+                                <button type="submit" className="bg-amber-500 text-s align-middle text-textdark px-5 py-3 hover:bg-amber-400 rounded-4xl cursor-pointer transition-colors duration:300" form="session-form">
                                     + Log Session
                                 </button>
                             </div>
