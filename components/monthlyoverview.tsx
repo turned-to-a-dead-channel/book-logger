@@ -48,11 +48,11 @@ export const MonthlyOverview = ({ data }: { data: MonthData[] }) => {
                                 books ? height = books / maxBooks * 100 : height = 0;
 
                                 return (
-                                    <div key={month} className="flex-1 flex flex-col items-center">
+                                    <div key={month} className="flex-1 flex flex-col items-center group">
                                         <div className="flex items-end w-full" style={{ height: `${MAX_HEIGHT_PX}px`}}>
                                             <div title={`${books} books`} className={`w-full ${ status === "current" ? "bg-amber-500" : books == maxBooks ? "bg-teal-800" : status == "completed" ? "bg-teal-600" : "bg-surface border border-edge" } mb-1`} style={{ height: `${ books == 0 ? MIN_HEIGHT_PERCENT : height}%` }}></div>
                                         </div>
-                                        <span className="text-xs items-center text-muted uppercase">{month}</span>
+                                        <span className="text-xs items-center text-muted uppercase group-hover:text-amber-500 transform duration-300">{month}</span>
                                     </div>
                                 )
                             }) 

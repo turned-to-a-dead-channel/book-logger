@@ -1,5 +1,6 @@
 const today = new Date();
 const lastMonth = new Date();
+lastMonth.setDate(1);
 lastMonth.setMonth(lastMonth.getMonth() - 1);
 const lastYear = new Date();
 lastYear.setFullYear(lastYear.getFullYear() - 1);

@@ -100,11 +100,11 @@ const HomePage = () => {
 
 
   {/* ***** PAGES LOGIC *************************************************************************** */}
-  const pagesThisYear = finishedThisYear.reduce((sum, book) => sum + (book.page_count_override ?? book.page_count), 0) + currentlyReading.reduce((sum, book) => sum + (book.page_count_override ?? book.page_count), 0);
+  const pagesThisYear = finishedThisYear.reduce((sum, book) => sum + (book.page_count_override ?? book.page_count), 0) + currentlyReading.reduce((sum, book) => sum + (book.current_page ?? 0), 0);
   const pagesThisMonth = finishedThisMonth.reduce((sum, book) => sum + (book.page_count_override ?? book.page_count), 0)
     + currentlyReading.reduce((sum, book) => sum + (book.current_page ?? 0), 0);
   const pagesLastYear = finishedByThisTimeLastYear.reduce((sum, book) => sum + (book.page_count_override ?? book.page_count), 0)
-
+  
 
   {/* ***** MONTHLY LOGIC ************************************************************************* */}
   const monthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
