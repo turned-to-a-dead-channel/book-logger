@@ -7,6 +7,13 @@ import { useRouter } from 'next/navigation';
 const BooksThisYear = ({ data } : { data: BooksThisYearData } ) => {
     const router = useRouter();
     const [selected, setSelected] = useState("month")
+    const [lastMonthLabel, setLastMonthLabel] = useState("")
+    const [currYearLabel, setCurrYearLabel] = useState("")
+
+    useEffect(() => {
+        setLastMonthLabel(dates.lastMonthString)
+        setCurrYearLabel(dates.currYearNumeric)
+    }, [])
     
     const { finishedReading, finishedThisYear, finishedByThisTimeLastYear, finishedThisMonth, finishedLastMonth, goalBooks } = data;
     const readBooksDiffMonth = finishedThisMonth.length - finishedLastMonth.length;
@@ -45,11 +52,11 @@ const BooksThisYear = ({ data } : { data: BooksThisYearData } ) => {
                 <span className={`font-mono text-xs ${readBooksDiffMonth > 0 ? "text-emerald-500" : readBooksDiffMonth < 0 ? "text-oxblood" : "text-amber-500" }`}>
                    { readBooksDiffMonth }&nbsp;
                 </span>
-                <span className="text-xs text-muted"> 
-                    vs { dates.lastMonthString } { dates.currYearNumeric } 
+                <span className="text-xs text-muted">
+                    vs { lastMonthLabel } { currYearLabel }
                 </span>
                 {/*
-                <span className="text-xs text-muted"> 
+                <span className="text-xs text-muted">
                     vs { dates.lastMonthString } { dates.currYearNumeric } &middot; { Math.floor((finishedThisYear.length / goalBooks) * 100)}% of goal
                 </span>
                 */}
