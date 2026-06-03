@@ -28,6 +28,6 @@ export interface PagesData {
 }
 
 export type ModalProps = {
-  isOpen: boolean,
-  onClose: () => void
+  isOpen: boolean;
+  onClose: () => void;
 }

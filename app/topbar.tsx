@@ -6,7 +6,7 @@ import { dates } from "@/lib/dates";
 import { useModal } from "@/context/modalcontext";
 
 const TopBar = () => {
-    const { isOpen, setIsOpen } = useModal();
+    const { activeModal, setActiveModal } = useModal();
     const [dateString, setDateString] = useState('');
     useEffect(() => { setDateString(dates.todayString) }, []);
     
@@ -21,13 +21,13 @@ const TopBar = () => {
                         <span className="ml-5 mt-2 font-serif align-middle text-textlight text-3xl">The </span> 
                         <span className="mt-2 font-serif align-middle text-amber-500 text-3xl">&nbsp;Still </span> 
                         <span className="mt-2 font-serif align-middle text-textlight text-3xl">&nbsp;Room</span> 
-                        <span className="mt-2 ml-5 align-middle font-mono uppercase tracking-wider-than-widest text-xs text-muted">Personal Library &middot; { dateString }</span>
+                        <span className="mt-2 ml-5 align-middle font-mono uppercase tracking-wider-than-widest text-xs text-muted">A Place for Preservation &middot; { dateString }</span>
                     </div>
                     <div className="m-5 flex flex-row">
-                        <button className="bg-teal-600 text-xs align-middle text-textdark px-4 py-2 hover:bg-teal-500 rounded-4xl cursor-pointer transition-colors duration:300 mr-5">
+                        <button onClick={() => setActiveModal("addBook")} className="bg-teal-600 text-xs align-middle text-textdark px-4 py-2 hover:bg-teal-500 rounded-4xl cursor-pointer transition-colors duration:300 mr-5">
                             + Add Book
                         </button>
-                        <button onClick={() => setIsOpen(true)} className="bg-amber-500 text-xs align-middle text-textdark px-4 py-2 hover:bg-amber-400 rounded-4xl cursor-pointer transition-colors duration:300">
+                        <button onClick={() => setActiveModal("logSession")} className="bg-amber-500 text-xs align-middle text-textdark px-4 py-2 hover:bg-amber-400 rounded-4xl cursor-pointer transition-colors duration:300">
                             + Log Session
                         </button>
                         <CircleStar className="h-8 w-8 ml-5 hover:text-amber-400 transition-colors duration-300" />

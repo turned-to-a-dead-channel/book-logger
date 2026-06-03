@@ -1,17 +1,21 @@
 "use client";
 import { createContext, useContext, useState } from 'react';
 
-const ModalContext = createContext({ isOpen: false, setIsOpen: (_: boolean) => {}});
+type ActiveModal = 'addBook' | 'logSession' | null;
+
+const ModalContext = createContext<{
+  activeModal: ActiveModal;
+  setActiveModal: (m: ActiveModal) => void;
+}>({ activeModal: null, setActiveModal: () => {} });
 
 export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [activeModal, setActiveModal] = useState<ActiveModal>(null);
 
     return (
-        <ModalContext.Provider value={{ isOpen, setIsOpen }} >
+        <ModalContext.Provider value={{ activeModal, setActiveModal }} >
             {children}
         </ModalContext.Provider>
     )
 }
 
 export const useModal = () => useContext(ModalContext);
-

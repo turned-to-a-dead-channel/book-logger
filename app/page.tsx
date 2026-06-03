@@ -10,9 +10,8 @@ import FavoritesPanel from '@/components/favorites';
 import { useModal } from '@/context/modalcontext';
 import { dates } from '@/lib/dates';
 import { useState, useEffect } from "react";
-
-// Move to context later
 import SessionModal from "@/components/modals/sessionlog";
+import AddBookModal from '@/components/modals/addbook';
 
 const placeholderStatData = {
   readBooks: 39,
@@ -53,7 +52,7 @@ const placeholderBookData = {
 const HomePage = () => {
   const [user, setUser] = useState<any>(null)
   const [books, setBooks] = useState<any[]>([])
-  const { isOpen, setIsOpen } = useModal();
+  const { activeModal, setActiveModal } = useModal();
 
   useEffect(() => {
     fetch('/api/users')
@@ -158,7 +157,8 @@ const HomePage = () => {
         </div>
       </div>
       */}
-      <SessionModal isOpen={isOpen} onClose={() => setIsOpen(false)} currentlyReading={currentlyReading} />
+      <SessionModal isOpen={activeModal === "logSession"} onClose={() => setActiveModal(null)} currentlyReading={currentlyReading} />
+      <AddBookModal isOpen={activeModal === "addBook"} userUid={user?.user_uid} onClose={() => setActiveModal(null)} />
     </div>
 )};
 
