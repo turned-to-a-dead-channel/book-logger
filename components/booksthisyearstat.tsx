@@ -21,7 +21,7 @@ const BooksThisYear = ({ data } : { data: BooksThisYearData } ) => {
     return (
         <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 min-w-64 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15">
             <div className="flex flex-row items-start justify-between">
-                <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall" onClick={() => router.replace("/books")}>Books Read</h4>
+                <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall cursor-pointer hover:text-amber-500" onClick={() => router.replace("/books")}>Books Read</h4>
                 <div className="flex flex-row gap-1">
                     <span className={`${selected === "month" ? "text-amber-500" : "text-muted" } text-textsmall uppercase cursor-pointer`} onClick={() => setSelected("month")}>Month</span>
                     <span className="text-muted text-textsmall uppercase">|</span>
@@ -52,11 +52,11 @@ const BooksThisYear = ({ data } : { data: BooksThisYearData } ) => {
                 <span className={`font-mono text-xs ${readBooksDiffMonth > 0 ? "text-emerald-500" : readBooksDiffMonth < 0 ? "text-oxblood" : "text-amber-500" }`}>
                    { readBooksDiffMonth }&nbsp;
                 </span>
-                <span className="text-xs text-muted">
-                    vs { lastMonthLabel } { currYearLabel }
+                <span className="text-xs text-muted"> 
+                    vs { dates.lastMonthString } { dates.currYearNumeric } 
                 </span>
                 {/*
-                <span className="text-xs text-muted">
+                <span className="text-xs text-muted"> 
                     vs { dates.lastMonthString } { dates.currYearNumeric } &middot; { Math.floor((finishedThisYear.length / goalBooks) * 100)}% of goal
                 </span>
                 */}
