@@ -7,11 +7,10 @@ import PagesThisYearStat from '@/components/pagesthisyearstat';
 import DailyAverageStat from '@/components/dailyaveragestat';
 import CurrentStreak from '@/components/currentstreakstat';
 import FavoritesPanel from '@/components/favorites';
-import { useModal } from '@/context/modalcontext';
 import { dates } from '@/lib/dates';
+import { useBooks } from '@/context/bookscontext';
+import { useUser } from '@/context/usercontext';
 import { useState, useEffect } from "react";
-import SessionModal from "@/components/modals/sessionlog";
-import AddBookModal from '@/components/modals/addbook';
 
 const placeholderStatData = {
   readBooks: 39,
@@ -50,20 +49,8 @@ const placeholderBookData = {
 };
 
 const HomePage = () => {
-  const [user, setUser] = useState<any>(null)
-  const [books, setBooks] = useState<any[]>([])
-  const { activeModal, setActiveModal } = useModal();
-
-  useEffect(() => {
-    fetch('/api/users')
-      .then(res => res.json())
-      .then(data => {
-        setUser(data)
-        return fetch(`/api/books/${data.user_uid}`)
-      })
-      .then(res => res.json())
-      .then(data => setBooks(data))
-  }, [])
+  const { user, isLoading } = useUser();
+  const { books } = useBooks();
 
   const goalBooks = user?.goal_books;
   const currentlyReading = books.filter(b => b.status === 'currently reading');
@@ -157,8 +144,6 @@ const HomePage = () => {
         </div>
       </div>
       */}
-      <SessionModal isOpen={activeModal === "logSession"} onClose={() => setActiveModal(null)} currentlyReading={currentlyReading} />
-      <AddBookModal isOpen={activeModal === "addBook"} userUid={user?.user_uid} onClose={() => setActiveModal(null)} />
     </div>
 )};
 

@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import TopBar from "./topbar";
 import { Newsreader, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
-import { ModalProvider } from "@/context/modalcontext";
+import { ModalProvider, useModal } from "@/context/modalcontext";
+import { BooksProvider, useBooks } from "@/context/bookscontext";
+import { UserProvider, useUser } from "@/context/usercontext";
+import ModalRenderer from '@/components/modals/modalrenderer';
 
 const newsreader = Newsreader({
   variable: "--font-newsreader",
@@ -30,10 +33,15 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html className={`${newsreader.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}>
       <body className="mb-8It">
-        <ModalProvider>
-          <TopBar></TopBar>
-          <main className="pt-28">{children}</main>
-        </ModalProvider>
+        <UserProvider>
+          <BooksProvider>
+            <ModalProvider>
+              <TopBar></TopBar>
+              <main className="pt-28">{children}</main>
+              <ModalRenderer />
+            </ModalProvider>
+          </BooksProvider>
+        </UserProvider>
       </body>
     </html>
   )
