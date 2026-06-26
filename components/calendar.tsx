@@ -1,23 +1,6 @@
 "use client"
 import { dates } from '@/lib/dates';
-
-// types.ts
-interface DayData {
-  date: Date;
-  count?: number;
-  isToday?: boolean;
-  hasData?: boolean;
-}
-
-interface Book {
-  id: string;
-  title: string;
-  cover: string;
-}
-
-interface CalendarData {
-  [key: string]: Book[]; // date string -> array of books
-}
+import { CalendarData } from '@/lib/types';
 
 import { useMemo } from 'react';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, getDay, isSameDay } from 'date-fns';
@@ -71,8 +54,9 @@ const CalendarPanel = ({ data }: { data: CalendarData }) => {
                                     <div className="grid grid-cols-2 gap-0.5 mt-auto mb-auto flex-1 min-h-0">
                                         {dayBooks.slice(0, 4).map(book => (
                                             <img 
-                                            key={book.id}
+                                            key={`${dateKey}-${book.id}`}
                                             src={book.cover}
+                                            title={book.title}
                                             alt={book.title}
                                             className="w-full aspect-2/3 object-cover rounded-sm"
                                             />

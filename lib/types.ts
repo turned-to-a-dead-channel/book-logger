@@ -26,6 +26,22 @@ export interface PagesData {
   pagesLastYear?: number,
   pagesThisMonth?: number
 }
+export interface DayData {
+  date: Date;
+  count?: number;
+  isToday?: boolean;
+  hasData?: boolean;
+}
+
+export interface Book {
+  id: string;
+  title: string;
+  cover: string;
+}
+
+export interface CalendarData {
+  [key: string]: Book[]; // date string -> array of books
+}
 
 export type ModalProps = {
   isOpen: boolean;

@@ -8,8 +8,10 @@ import DailyAverageStat from '@/components/dailyaveragestat';
 import CurrentStreak from '@/components/currentstreakstat';
 import FavoritesPanel from '@/components/favorites';
 import { dates } from '@/lib/dates';
-import { useBooks } from '@/context/bookscontext';
+import { CalendarData } from '@/lib/types';
+import { useBooks, useLogs } from '@/context/bookscontext';
 import { useUser } from '@/context/usercontext';
+import { format } from 'date-fns';
 import { useState, useEffect } from "react";
 
 const placeholderStatData = {
@@ -26,31 +28,10 @@ const placeholderStatData = {
   bestStreakYear: 2024
 }
 
-const placeholderBookData = {
-  "2026-05-03": [
-    { id: "1", title: "Eileen", cover: "https://covers.openlibrary.org/b/id/0014630300-M.jpg" },
-    { id: "2", title: "My Year of Rest and Relaxation", cover: "https://covers.openlibrary.org/b/id/0014605019-M.jpg" }
-  ],
-  "2026-05-04": [
-    { id: "1", title: "Eileen", cover: "https://covers.openlibrary.org/b/id/0014630300-M.jpg" },
-    { id: "2", title: "My Year of Rest and Relaxation", cover: "https://covers.openlibrary.org/b/id/0014605019-M.jpg" }
-  ],
-  "2026-05-08": [
-    { id: "1", title: "Eileen", cover: "https://covers.openlibrary.org/b/id/0014630300-M.jpg" },
-    { id: "2", title: "McGlue", cover: "https://covers.openlibrary.org/b/id/0008806923-M.jpg" },
-    { id: "4", title: "Lapvona", cover: "https://covers.openlibrary.org/b/id/15171235-M.jpg" },
-    { id: "5", title: "Homesick for Another World", cover: "https://covers.openlibrary.org/b/id/0008043774-M.jpg" },
-    { id: "6", title: "Death in Her Hands", cover: "https://covers.openlibrary.org/b/id/10387071-M.jpg" },
-  ],
-  "2026-05-23": [
-    { id: "1", title: "Eileen", cover: "https://covers.openlibrary.org/b/id/0014630300-M.jpg" },
-    { id: "2", title: "My Year of Rest and Relaxation", cover: "https://covers.openlibrary.org/b/id/0014605019-M.jpg" }
-  ],
-};
-
 const HomePage = () => {
   const { user, isLoading } = useUser();
   const { books } = useBooks();
+  const { logs } = useLogs();
 
   const goalBooks = user?.goal_books;
   const currentlyReading = books.filter(b => b.status === 'currently reading');
@@ -108,6 +89,25 @@ const HomePage = () => {
     };
   });
 
+  {/* ***** LOGS LOGIC *************************************************************************### */}
+  function groupLogsByDate(logs: any[]): CalendarData {
+    return logs.reduce((acc, log) => {
+      const dateKey = format(new Date(log.date_logged), 'yyyy-MM-dd');
+
+      if (!acc[dateKey]) acc[dateKey] = [];
+
+      acc[dateKey].push({
+        id: log.books_logs_uid,
+        title: log.title_override ?? log.title,
+        cover: log.cover_override ?? log.cover,
+      });
+
+      return acc;
+    }, {} as CalendarData);
+  }
+
+  const calendarData = groupLogsByDate(logs);
+
   return (
     <div className='ml-5 mr-5 flex flex-col justify-center gap-5'>
       <div className="flex flex-row flex-wrap gap-5 items-stretch justify-center">
@@ -123,7 +123,7 @@ const HomePage = () => {
       </div>
 
       <div className="flex flex-row flex-wrap gap-5 items-stretch justify-center">
-        <CalendarPanel data={ placeholderBookData } />
+        <CalendarPanel data={ calendarData } />
         <FavoritesPanel data = { displayedFavorites } />
       </div>
       { /*
