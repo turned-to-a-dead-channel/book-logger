@@ -24,21 +24,21 @@ const Footer = () => {
     const quote = getRandomFooterQuote(quotes) 
 
     return (
-        <footer className="mt-10 bg-black/50 border-t border-edge h-72">
+        <footer className="mt-10 bg-black/50 border-t border-edge">
             { 
                 quote && 
                 (
-                    <div className="text-center">
+                    <div className="text-center pb-10">
                         <div className="font-serif text-4xl mt-10 pt-10 text-amber-500">
                             &ldquo;
                         </div>
-                        <div className='font-serif text-white text-2xl'>
+                        <div className='font-serif text-white text-2xl max-w-[60%] mx-auto'>
                             {quote.quote}
                         </div>
                         <div className="font-serif text-4xl pt-5 text-amber-500">
                             &rdquo;
                             </div>
-                        <div className='font-mono text-md text-muted'>  
+                        <div className='font-mono text-md text-muted max-w-[60%] mx-auto'>  
                             { quote.author } { quote.book && (<> &middot; {quote.book}</>) }
                         </div>
                     </div>
