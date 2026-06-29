@@ -27,8 +27,6 @@ export const BooksProvider = ({ children }: { children: React.ReactNode }) => {
         .then(data => setLogs(data))
         .finally(() => setIsLoading(false))
     }, [user])
-
-    console.log(logs);
     
     return (
         <BooksContext.Provider value={{ books, logs, isLoading }} >

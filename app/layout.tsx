@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import TopBar from "./topbar";
+import Footer from "./footer";
 import { Newsreader, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { ModalProvider, useModal } from "@/context/modalcontext";
@@ -38,6 +39,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
             <ModalProvider>
               <TopBar></TopBar>
               <main className="pt-28">{children}</main>
+              <Footer></Footer>
               <ModalRenderer />
             </ModalProvider>
           </BooksProvider>
