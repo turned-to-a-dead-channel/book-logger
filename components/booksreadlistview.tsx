@@ -16,19 +16,19 @@ const BooksReadListView = ({ data, sortKey, sortDir, onSort }: BooksReadListView
                     <th>
                         #
                     </th>
-                    <th className="cursor-pointer text-left" onClick={() => onSort('title')}>
+                    <th className={`${sortKey === "title" ? 'text-amber-500' : 'text-white'} cursor-pointer text-left`} onClick={() => onSort('title')}>
                         Title {sortKey === 'title' && (sortDir === 'asc' ? '↑' : '↓')}
                     </th>
-                    <th className="cursor-pointer text-left" onClick={() => onSort('author')}>
+                    <th className={`${sortKey === "author" ? 'text-amber-500' : 'text-white'} cursor-pointer text-left1`} onClick={() => onSort('author')}>
                         Author {sortKey === 'author' && (sortDir === 'asc' ? '↑' : '↓')}
                     </th>
-                    <th className="cursor-pointer" onClick={() => onSort('page_count')}>
+                    <th className={`${sortKey === "page_count" ? 'text-amber-500' : 'text-white'} cursor-pointer`} onClick={() => onSort('page_count')}>
                         Pages {sortKey === 'page_count' && (sortDir === 'asc' ? '↑' : '↓')}
                     </th>
-                    <th className="cursor-pointer" onClick={() => onSort('date_finished')}>
+                    <th className={`${sortKey === "date_finished" ? 'text-amber-500' : 'text-white'} cursor-pointer`} onClick={() => onSort('date_finished')}>
                         Date Finished {sortKey === 'date_finished' && (sortDir === 'asc' ? '↑' : '↓')}
                     </th>
-                    <th className="cursor-pointer" onClick={() => onSort('rating')}>
+                    <th className={`${sortKey === "rating" ? 'text-amber-500' : 'text-white'} cursor-pointer`} onClick={() => onSort('rating')}>
                         Rating {sortKey === 'rating' && (sortDir === 'asc' ? '↑' : '↓')}
                     </th>
                 </tr>
@@ -40,17 +40,17 @@ const BooksReadListView = ({ data, sortKey, sortDir, onSort }: BooksReadListView
                     <td>{index + 1}</td>
                     <td>
                         <div className="flex items-center gap-3">
-                            {book.cover ? 
-                                <img src={`${book.cover}`} className="w-10 h-14 object-cover inline mr-3" /> : 
+                            {book.cover || book.cover_override ? 
+                                <img src={`${book.cover_override? book.cover_override : book.cover}`} className="w-10 h-14 object-cover inline mr-3" /> : 
                                 <div className={`w-10 h-14 ${getRandomColor(bgColors)} overflow-hidden inline-block mr-3`}></div>
                             }
-                            { book.title }
+                            { book.title_override ? book.title_override : book.title }
                         </div>
                     </td>
-                    <td>{ book.author }</td>
-                    <td className="text-center">{ book.page_count }</td>
+                    <td>{ book.author_override ? book.author_override : book.author }</td>
+                    <td className="text-center">{ book.page_count_override ? book.page_count_override : book.page_count }</td>
                     <td className="text-left">{book.date_finished ? new Date(book.date_finished).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—'}</td>
-                    <td className="text-center">{ book.rating }</td>
+                    <td className="text-center">{ book.rating ? book.rating : "No rating"}</td>
                 </tr>
             ))}
             </tbody>

@@ -49,17 +49,34 @@ const BooksPage = () => {
     
     return (
         <div className="m-5">
-            <div className="flex flex-row justify-between">
-                <a className="text-amber-500 cursor-pointer" onClick={() => router.replace("/")}>Go Home</a>
-                <div className = "flex flex-row items-center justify-center">
-                    <span className='font-mono uppercase text-xs text-muted tracking-wider-than-widest mr-3'>
+            <div className="flex flex-col md:flex-row justify-between mb-10">
+                <div className='m-5 flex flex-row font-mono border border-gray-800 rounded-2xl text-sm text-muted uppercase'>
+                    <span className="p-3 pl-7 font-bold tracking-wider-than-widest">Sort By: </span>
+                    <span className={`p-3 cursor-pointer ${sortKey === "title" ? 'text-amber-500' : "text-muted"} transition duration-200 hover:text-amber-400`} onClick={() => onSort('title')}>
+                        Title {sortKey === 'title' && (sortDir === 'asc' ? '↑' : '↓')}
+                    </span>
+                    <span className={`p-3 cursor-pointer ${sortKey === "author" ? 'text-amber-500' : "text-muted"} hover:text-amber-400 transition duration-200`} onClick={() => onSort('author')}>
+                        Author {sortKey === 'author' && (sortDir === 'asc' ? '↑' : '↓')}
+                    </span>
+                    <span className={`p-3 cursor-pointer ${sortKey === "page_count" ? 'text-amber-500' : "text-muted"} transition duration-200 hover:text-amber-400`} onClick={() => onSort('page_count')}>
+                        Pages {sortKey === 'page_count' && (sortDir === 'asc' ? '↑' : '↓')}
+                    </span>
+                    <span className={`p-3 cursor-pointer ${sortKey === "date_finished" ? 'text-amber-500' : "text-muted"} transition duration-200 hover:text-amber-400`} onClick={() => onSort('date_finished')}>
+                        Date Finished {sortKey === 'date_finished' && (sortDir === 'asc' ? '↑' : '↓')}
+                    </span>
+                    <span className={`p-3 pr-7 cursor-pointer ${sortKey === "rating" ? 'text-amber-500' : "text-muted"} transition duration-200 hover:text-amber-400`} onClick={() => onSort('rating')}>
+                        Rating {sortKey === 'rating' && (sortDir === 'asc' ? '↑' : '↓')}
+                    </span>
+                </div>
+                <div className = "flex flex-row items-center justify-center border  border-gray-800 rounded-2xl uppercase text-sm m-5">
+                    <span className='font-mono font-bold text-muted tracking-wider-than-widest mr-3 pl-7'>
                         View: 
                     </span>
-                    <div>
-                        <List className={`${view == 'list' ? 'text-amber-500' : 'text-muted'} mr-3 text-xs hover:text-amber-500`} onClick={() => setView("list")}/>
+                    <div className='p-3 pr-7'>
+                        <List className={`${view == 'list' ? 'text-amber-500' : 'text-muted'} hover:text-amber-400 block`} onClick={() => setView("list")}/>
                     </div>
-                    <div className="p-3 border-gray-50">
-                        <BookImage className={`${view == 'cover' ? 'text-amber-500' : 'text-muted'} text-xs hover:text-amber-500`} onClick={() => setView("cover")}/>
+                    <div className='p-3 pr-7'>
+                        <BookImage className={`${view == 'cover' ? 'text-amber-500' : 'text-muted'} hover:text-amber-400 block`} onClick={() => setView("cover")}/>
                     </div>
                 </div>
             </div>
