@@ -1,7 +1,6 @@
 import { PagesData } from "@/lib/types";
 
 const DailyAverageStat = ({ data } : { data : PagesData }) => {
-
     return (    
         <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 min-w-64 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15">
             <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Daily Average</h4>

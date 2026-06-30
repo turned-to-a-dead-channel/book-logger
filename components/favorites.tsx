@@ -1,10 +1,11 @@
 "use client";
-import { getRandomColor, bgColors, borderColors } from "@/lib/colors";
+import { getRandomColor, bgColors } from "@/lib/colors";
 
 const FavoritesPanel = ({ data } : { data: any[] }) => {
     return (
         <div className="bg-surface border border-edge rounded-lg p-5 flex-1 min-w-64">
-          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Favorites</h4>
+          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall h-6">Highly Rated Books</h4>
+          <h1 className="font-serif mt-2 pb-7 text-2xl text-textlight">Favorites</h1>
           { data.length > 0 ? 
             <div className="grid grid-cols-[repeat(auto-fill,minmax(8rem,1fr))] gap-4 mt-5">
                 {

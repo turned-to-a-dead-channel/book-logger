@@ -2,35 +2,9 @@
 import { useState, useEffect } from "react";
 import { Bookmark, BookmarkCheck } from "lucide-react";
 import { dates } from "@/lib/dates";
+import { BookInfoData } from "@/lib/types";
 
-
-interface BookQuote {
-  books_quotes_id: number
-  books_quotes_uid: string
-  ub_id: number
-  quote: string
-  page_number?: number
-}
-export interface BookData {
-    title: string,
-    title_override?: string,
-    author: string,
-    author_override?: string,
-    status: "to read" | "currently reading" | "completed",
-    current_page?: number,
-    page_count: number,
-    page_count_override: number
-    publisher?: string
-    pubDate?: number,
-    date_started?: Date,
-    date_finished?: Date,
-    subtitle?: string,
-    quotes?: BookQuote[],
-    cover?: string,
-    cover_override?: string
-}
-
-export const CurrentlyReading = ({ data } : { data: BookData[] }) => {
+export const CurrentlyReading = ({ data } : { data: BookInfoData[] }) => {
     const [randomQuote, setRandomQuote] = useState<string | undefined>(undefined);
     const [selectedIndex, setSelectedIndex] = useState(0)
 
@@ -60,7 +34,7 @@ export const CurrentlyReading = ({ data } : { data: BookData[] }) => {
     return (
         <div className="bg-surface border border-edge rounded-lg p-5 flex-1 min-w-64">
                 <div className="flex flex-row justify-between">
-                    <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Currently Reading</h4>
+                    <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall h-6">Currently Reading</h4>
                     <div className='flex flex-row'>
                     { data.map((b, index) => (
                         index === selectedIndex

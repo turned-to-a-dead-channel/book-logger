@@ -2,7 +2,6 @@ import { dates } from "@/lib/dates";
 import { PagesData } from "@/lib/types";
 import { ChevronUp, ChevronDown, Equal } from 'lucide-react';
 
-
 const PagesThisYearStat = ({ data } : { data: PagesData }) => {
     const { pagesLastYear, pagesThisYear } = data; 
     const yearToYearDiff = (!pagesThisYear && !pagesLastYear) ? 0

@@ -1,14 +1,7 @@
-import { BooksThisYearData } from "@/lib/types";
 import { getRandomColor, bgColors, borderColors } from "@/lib/colors";
+import { BooksReadListViewData } from '@/lib/types';
 
-interface BooksReadListViewProps {
-    data: any[];
-    sortKey: string;
-    sortDir: 'asc' | 'desc';
-    onSort: (key: string) => void;
-}
-
-const BooksReadListView = ({ data, sortKey, sortDir, onSort }: BooksReadListViewProps) => {
+const BooksReadListView = ({ data, sortKey, sortDir, onSort }: BooksReadListViewData) => {
     return (  
         <table className="w-full m-5 [&_td]:px-4 [&_td]:py-2 [&_th]:px-4 [&_th]:py-2">
             <thead>

@@ -1,7 +1,5 @@
 "use client"
-import { dates } from '@/lib/dates';
 import { CalendarData } from '@/lib/types';
-
 import { useMemo } from 'react';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, getDay, isSameDay } from 'date-fns';
 
@@ -20,9 +18,12 @@ const CalendarPanel = ({ data }: { data: CalendarData }) => {
 
     return (
         <div className="bg-surface border border-edge rounded-lg p-5 flex-1 min-w-64">
-            <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">
-                { dates.currMonthString } { dates.currYearNumeric } Overview
+            <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall h-6">
+                This Month Overview
             </h4>
+            <h1 className="font-serif mt-2 pb-7 text-2xl text-textlight">
+                {format(today, "MMMM")} {format(today, "y")}
+            </h1>
             <div className="p-2 pt-8 rounded-lg">
                 <div className="grid grid-cols-7 gap-2 w-full auto-rows-fr">
                     {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, i) => (

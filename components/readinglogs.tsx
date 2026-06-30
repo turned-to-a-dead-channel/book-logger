@@ -1,13 +1,12 @@
-import { useState } from 'react';
-import { dates } from "@/lib/dates";
 import { ReadingLog } from '@/lib/types';
 import { Pencil, Trash2 } from 'lucide-react';
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, getDay, isSameDay } from 'date-fns';
+import { format } from 'date-fns';
 
 const ReadingLogPanel = ({ data } : { data: ReadingLog[] }) => {
     return (
         <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-            <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall mb-10">Reading Log: In Progress</h4>
+            <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall h-6">Latest Logs</h4>
+            <h1 className="font-serif mt-2 pb-7 text-2xl text-textlight">Reading Logs</h1>
             {
                 data.map((log, index) => (
                     <div className="flex flex-row items-center border-b border-edge mb-5 pb-3" key={log.books_logs_uid}>

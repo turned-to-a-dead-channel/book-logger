@@ -1,12 +1,5 @@
 import { useState } from 'react';
-import { dates } from "@/lib/dates";
-
-export interface MonthData {
-    month: string,
-    pages?: number,
-    books?: number,
-    status?: "completed" | "upcoming" | "current"
-}
+import { MonthData } from '@/lib/types';
 
 export const MonthlyOverview = ({ data }: { data: MonthData[] }) => {    
     const [selected, setSelected] = useState("books")
@@ -18,7 +11,7 @@ export const MonthlyOverview = ({ data }: { data: MonthData[] }) => {
     return (
         <div className="bg-surface border border-edge rounded-lg p-5 flex-1 min-w-64">
             <div className='flex flex-row justify-between'>
-                <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">2026 &middot; Monthly Overview in Numbers</h4>
+                <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall h-6">2026 &middot; Monthly Overview in Numbers</h4>
                 <div className="flex flex-row gap-1">
                     <span className={`${selected === "books" ? "text-amber-500" : "text-muted" } text-textsmall uppercase cursor-pointer`} onClick={() => setSelected("books")}>Books</span>
                     <span className="text-muted text-textsmall uppercase">|</span>

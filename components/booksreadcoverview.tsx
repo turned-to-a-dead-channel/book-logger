@@ -1,15 +1,8 @@
 import { getRandomColor, bgColors, borderColors } from "@/lib/colors";
 import { Star, StarHalf} from 'lucide-react';
+import { BooksReadCoverViewData } from '@/lib/types';
 
-interface BooksReadCoverViewProps {
-    data: any[];
-    sortKey: string;
-    sortDir: 'asc' | 'desc';
-    onSort: (key: string) => void;
-}
-
-const BooksReadCoverView = ({ data, sortKey, sortDir, onSort }: BooksReadCoverViewProps) =>  {
-
+const BooksReadCoverView = ({ data, sortKey, sortDir, onSort }: BooksReadCoverViewData ) =>  {
     const getStarType = (rating: number, position: number) => {
         if (rating >= position) return 'full';
         if (rating >= position - 0.5) return 'half';
