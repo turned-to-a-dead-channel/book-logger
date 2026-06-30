@@ -114,7 +114,7 @@ export const CurrentlyReading = ({ data } : { data: BookData[] }) => {
                                 <div className='flex'>
                                     { books.current_page && (Math.round((books.current_page / totalPages) * 100)) + "%"}
 
-                                    { daysSince ? ` \u00B7 Began ${daysSince}d ago` : " \u00B7 No start date set" }
+                                    { daysSince !== undefined ? ` \u00B7 Began ${daysSince}d ago` : " \u00B7 No start date set" }
                                 </div>
                             </div>
                         </div>
