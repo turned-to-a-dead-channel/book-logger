@@ -43,7 +43,21 @@ export interface CalendarData {
   [key: string]: Book[]; // date string -> array of books
 }
 
+export interface ReadingLog {
+  books_logs_uid: string;
+  date_logged: string;
+  title: string;
+  title_override?: string;
+  author: string;
+  author_override?: string,
+  cover?: string;
+  cover_override?: string;
+  start_page: number;
+  end_page: number;
+}
+
 export type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
 }
+

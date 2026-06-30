@@ -1,5 +1,6 @@
 "use client";
 import CalendarPanel from '@/components/calendar';
+import ReadingLogPanel from '@/components/readinglogs';
 import BooksThisYear from '@/components/booksthisyearstat';
 import { MonthData, MonthlyOverview } from '@/components/monthlyoverview';
 import { CurrentlyReading } from '@/components/currentlyreading';
@@ -8,7 +9,7 @@ import DailyAverageStat from '@/components/dailyaveragestat';
 import CurrentStreak from '@/components/currentstreakstat';
 import FavoritesPanel from '@/components/favorites';
 import { dates } from '@/lib/dates';
-import { CalendarData } from '@/lib/types';
+import { CalendarData, ReadingLog } from '@/lib/types';
 import { useBooks, useLogs } from '@/context/bookscontext';
 import { useUser } from '@/context/usercontext';
 import { format } from 'date-fns';
@@ -37,7 +38,6 @@ const HomePage = () => {
   const currentlyReading = books.filter(b => b.status === 'currently reading');
   const favorites = books.filter(b => b.is_favorite);
   const displayedFavorites = favorites.length > 0 ? favorites : books.filter(b => b.rating == 5);
-
 
   {/* ***** FINISHED LOGIC ************************************************************************ */}
   const finishedReading = books.filter(b => b.status === 'finished');
@@ -126,7 +126,8 @@ const HomePage = () => {
         <CalendarPanel data={ calendarData } />
         <FavoritesPanel data = { displayedFavorites } />
       </div>
-      { /*
+
+      {/*
       <div className="flex flex-row flex-wrap gap-5 items-stretch justify-center">
         <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
           <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">The Shelves: In Progress</h4>
@@ -135,15 +136,13 @@ const HomePage = () => {
           <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">The Numbers: In Progress</h4>
         </div>
       </div>
+      */}
       <div className="flex flex-row flex-wrap gap-5 items-stretch justify-center">
-        <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Reading Log: In Progress</h4>
-        </div>
+        <ReadingLogPanel data={ logs } />
         <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
           <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Up next: In Progress</h4>
         </div>
       </div>
-      */}
     </div>
 )};
 
