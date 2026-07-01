@@ -12,6 +12,14 @@ export interface BookData {
   bestStreakYear?: number,
 }
 
+// temporary
+export interface StreakData {
+  currentStreak?: number,
+  bestStreak?: number,
+  bestStreakMonth?: string,
+  bestStreakYear?: number,
+}
+
 interface BookQuote {
   books_quotes_id: number
   books_quotes_uid: string

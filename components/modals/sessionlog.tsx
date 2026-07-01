@@ -1,10 +1,9 @@
 "use client";
 import { useEffect, useState } from 'react';
-import { dates } from '@/lib/dates';
 import { ModalProps } from "@/lib/types";
 import { X } from 'lucide-react';
 
-const SessionModal = ({ isOpen, onClose, currentlyReading }: ModalProps & { currentlyReading: any[] }) => {
+const SessionModal = ({ isOpen, onClose, currentlyReading, todayString }: ModalProps & { currentlyReading: any[], todayString: string }) => {
     const [selectedBook, setSelectedBook] = useState<any>(null);
     const [startPage, setStartPage] = useState<number>(selectedBook?.current_page ?? 0);
     const [endPage, setEndPage] = useState<number | null>(null);
@@ -78,7 +77,7 @@ const SessionModal = ({ isOpen, onClose, currentlyReading }: ModalProps & { curr
                                     await fetch('/api/books_log', {
                                         method: 'POST',
                                         headers: { 'Content-Type': 'application/json' },
-                                        body: JSON.stringify({ uid: selectedBook.user_books_uid, startPage, endPage, quote })
+                                        body: JSON.stringify({ userBooksuid: selectedBook.user_books_uid, startPage, endPage, quote })
                                     });
                                     handleClose();
                                 }}>
@@ -110,7 +109,7 @@ const SessionModal = ({ isOpen, onClose, currentlyReading }: ModalProps & { curr
                         </div>
 
                         <div className="flex flex-row w-full border-t mt-6 p-4 justify-between">
-                            <h4 className="mt-2 text-textlight font-mono uppercase tracking-wider-than-widest text-textsmall mb-2">Logging <span className="text-amber-500">{dates.todayString}</span> &middot; Session for <span className="text-amber-500">{ pagesRead }</span>&nbsp;pages</h4>
+                            <h4 className="mt-2 text-textlight font-mono uppercase tracking-wider-than-widest text-textsmall mb-2">Logging <span className="text-amber-500">{todayString}</span> &middot; Session for <span className="text-amber-500">{ pagesRead }</span>&nbsp;pages</h4>
 
                             <div>
                                 <button className="mr-5 bg-surface-opaque text-s border border-muted align-middle text-muted px-5 py-3 hover:bg-zinc-800 rounded-4xl cursor-pointer transition-colors duration:300" onClick={handleClose}>Cancel</button>

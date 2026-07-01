@@ -2,16 +2,15 @@
 import { useState, useEffect } from 'react';
 import Image from "next/image"
 import { CircleStar } from 'lucide-react';
-import { dates } from "@/lib/dates";
 import { useModal } from "@/context/modalcontext";
 import { useRouter } from 'next/navigation';
 
-const TopBar = () => {
+const TopBar = ( { todayString } : { todayString: string }) => {
     const { activeModal, setActiveModal } = useModal();
     const [dateString, setDateString] = useState('');
     const router = useRouter();
 
-    useEffect(() => { setDateString(dates.todayString) }, []);
+    useEffect(() => { setDateString(todayString) }, []);
     
     return (
         <>

@@ -1,8 +1,8 @@
-import { dates } from "@/lib/dates";
+"use client"
 import { PagesData } from "@/lib/types";
 import { ChevronUp, ChevronDown, Equal } from 'lucide-react';
 
-const PagesThisYearStat = ({ data } : { data: PagesData }) => {
+const PagesThisYearStat = ({ data, prevYearNumeric } : { data: PagesData, prevYearNumeric: string }) => {
     const { pagesLastYear, pagesThisYear } = data; 
     const yearToYearDiff = (!pagesThisYear && !pagesLastYear) ? 0
     : !pagesLastYear ? pagesThisYear
@@ -25,7 +25,7 @@ const PagesThisYearStat = ({ data } : { data: PagesData }) => {
                 </span>
 
                 <span className="text-xs text-muted"> 
-                    compared to { dates.prevYearNumeric } 
+                    compared to { prevYearNumeric } 
                 </span>
             </div>
         </div>

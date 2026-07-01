@@ -1,50 +1,38 @@
-"use client";
 import CalendarPanel from '@/components/calendar';
 import ReadingLogPanel from '@/components/readinglogs';
 import BooksThisYear from '@/components/booksthisyearstat';
-import { MonthData, MonthlyOverview } from '@/components/monthlyoverview';
+import MonthlyOverview from '@/components/monthlyoverview';
 import { CurrentlyReading } from '@/components/currentlyreading';
 import PagesThisYearStat from '@/components/pagesthisyearstat';
 import DailyAverageStat from '@/components/dailyaveragestat';
 import CurrentStreak from '@/components/currentstreakstat';
 import FavoritesPanel from '@/components/favorites';
-import { dates } from '@/lib/dates';
-import { CalendarData, ReadingLog } from '@/lib/types';
-import { useBooks, useLogs } from '@/context/bookscontext';
-import { useUser } from '@/context/usercontext';
+import { getDates } from '@/lib/dates';
+import { CalendarData, ReadingLog, MonthData } from '@/lib/types';
 import { format } from 'date-fns';
-import { useState, useEffect } from "react";
+import { getUser } from '@/lib/queries/user';
+import { getBooksByUserUid } from '@/lib/queries/books';
+import { getBooksLogs } from '@/lib/queries/bookslog';
 
-const placeholderStatData = {
-  readBooks: 39,
-  goalBooks: 100,
-  readBooksCurrMonth: 10,
-  readBooksLastMonth: 12,
-  pagesThisYear: 2000,
-  pagesLastYear: 1500,
-  thirtyDayAvg: 50,
-  currentStreak: 10,
-  bestStreak: 20,
-  bestStreakMonth: "October",
-  bestStreakYear: 2024
-}
-
-const HomePage = () => {
-  const { user, isLoading } = useUser();
-  const { books } = useBooks();
-  const { logs } = useLogs();
+const HomePage = async () => {
+  const user = await getUser();
+  const books = await getBooksByUserUid(user.user_uid);
+  const logs = await getBooksLogs({ userUid: user.user_uid });
+  const today = new Date(); // computed once, server-side, no hydration risk
 
   const goalBooks = user?.goal_books;
   const currentlyReading = books.filter(b => b.status === 'currently reading');
   const favorites = books.filter(b => b.is_favorite);
   const displayedFavorites = favorites.length > 0 ? favorites : books.filter(b => b.rating == 5);
 
+  const dates = getDates(today);
+
   {/* ***** FINISHED LOGIC ************************************************************************ */}
   const finishedReading = books.filter(b => b.status === 'finished');
 
   const finishedThisYear = books.filter(b => {
     if (!b.date_finished) return false
-    return b.status === 'finished' && b.date_finished.includes(dates.currYearNumeric)
+    return b.status === 'finished' && b.date_finished.getFullYear() === today.getFullYear()
   })
 
   const finishedByThisTimeLastYear = books.filter(b => {
@@ -108,17 +96,22 @@ const HomePage = () => {
 
   const calendarData = groupLogsByDate(logs);
 
+
   return (
     <div className='ml-5 mr-5 flex flex-col justify-center gap-5'>
       <div className="flex flex-row flex-wrap gap-5 items-stretch justify-center">
-        <BooksThisYear data={{ finishedReading, finishedThisYear, finishedByThisTimeLastYear, finishedThisMonth, finishedLastMonth, goalBooks }} />
-        <PagesThisYearStat data={{ pagesThisYear, pagesLastYear }} />
+        <BooksThisYear 
+          data={{ finishedReading, finishedThisYear, finishedByThisTimeLastYear, finishedThisMonth, finishedLastMonth, goalBooks }} lastMonthString={dates.lastMonthString}
+          currYearNumeric={dates.currYearNumeric}
+          currMonthRaw={dates.currMonthRaw} 
+        />
+        <PagesThisYearStat data={{ pagesThisYear, pagesLastYear }} prevYearNumeric = { dates.prevYearNumeric } />
         <DailyAverageStat data={{ pagesThisMonth, pagesThisYear }} />
-        <CurrentStreak data={ placeholderStatData } />
+        <CurrentStreak data={{currentStreak: 10, bestStreak: 20, bestStreakMonth: "May", bestStreakYear: 2026}} />
       </div>
 
       <div className="flex flex-row flex-wrap gap-5 items-stretch justify-center">
-        <CurrentlyReading data = { currentlyReading } />
+        <CurrentlyReading data = { currentlyReading } todayRaw = {dates.todayRaw } />
         <MonthlyOverview data= { monthlyData } />
       </div>
 

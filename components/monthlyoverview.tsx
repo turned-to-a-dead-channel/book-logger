@@ -1,7 +1,8 @@
+"use client"
 import { useState } from 'react';
 import { MonthData } from '@/lib/types';
 
-export const MonthlyOverview = ({ data }: { data: MonthData[] }) => {    
+const MonthlyOverview = ({ data }: { data: MonthData[] }) => {    
     const [selected, setSelected] = useState("books")
     const maxPages = Math.max(...data.map(d => d.pages ?? 0));
     const maxBooks = Math.max(...data.map(d => d.books ?? 0));
@@ -72,3 +73,5 @@ export const MonthlyOverview = ({ data }: { data: MonthData[] }) => {
         </div>
     )
 }
+
+export default MonthlyOverview;

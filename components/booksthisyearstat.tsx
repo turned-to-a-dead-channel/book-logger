@@ -1,20 +1,14 @@
+"use client"
 import { useState, useEffect } from "react";
-import { dates } from '@/lib/dates';
+import { getDates } from '@/lib/dates';
 import { BooksThisYearData } from "@/lib/types";
 import { ChevronUp, ChevronDown, Equal } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-const BooksThisYear = ({ data } : { data: BooksThisYearData } ) => {
+const BooksThisYear = ({ data, lastMonthString, currYearNumeric, currMonthRaw  } : { data: BooksThisYearData, lastMonthString: string, currYearNumeric: string, currMonthRaw: number } ) => {
     const router = useRouter();
     const [selected, setSelected] = useState("month")
-    const [lastMonthLabel, setLastMonthLabel] = useState("")
-    const [currYearLabel, setCurrYearLabel] = useState("")
 
-    useEffect(() => {
-        setLastMonthLabel(dates.lastMonthString)
-        setCurrYearLabel(dates.currYearNumeric)
-    }, [])
-    
     const { finishedReading, finishedThisYear, finishedByThisTimeLastYear, finishedThisMonth, finishedLastMonth, goalBooks } = data;
     const readBooksDiffMonth = finishedThisMonth.length - finishedLastMonth.length;
 
@@ -35,7 +29,7 @@ const BooksThisYear = ({ data } : { data: BooksThisYearData } ) => {
                 </div> : 
                 <div className="mt-5 ml-5 flex flex-row items-center">
                     <span className="text-5xl text-textlight font-serif">{ finishedThisMonth.length }</span>
-                    <span className="text-muted ml-2 font-mono uppercase text-xs">&nbsp;of { Math.round((goalBooks - finishedThisYear.length)/(12 - dates.currMonthRaw)) } goal</span>
+                    <span className="text-muted ml-2 font-mono uppercase text-xs">&nbsp;of { Math.round((goalBooks - finishedThisYear.length)/(12 - currMonthRaw)) } goal</span>
                 </div> 
             } 
             <div className="flex flex-row mt-5">
@@ -44,7 +38,7 @@ const BooksThisYear = ({ data } : { data: BooksThisYearData } ) => {
                         { Math.floor((finishedThisYear.length / goalBooks) * 100)}% of goal&nbsp;&middot;&nbsp;
                     </span> :
                     <span className="text-xs text-muted"> 
-                        { Math.floor((finishedThisMonth.length / Math.round((goalBooks - finishedThisYear.length)/(12 - dates.currMonthRaw))) * 100)}% of goal&nbsp;&middot;&nbsp;
+                        { Math.floor((finishedThisMonth.length / Math.round((goalBooks - finishedThisYear.length)/(12 - currMonthRaw))) * 100)}% of goal&nbsp;&middot;&nbsp;
                     </span>
                 }
 
@@ -53,7 +47,7 @@ const BooksThisYear = ({ data } : { data: BooksThisYearData } ) => {
                    { readBooksDiffMonth }&nbsp;
                 </span>
                 <span className="text-xs text-muted"> 
-                    vs { dates.lastMonthString } { dates.currYearNumeric } 
+                    vs { lastMonthString } { currYearNumeric }
                 </span>
                 {/*
                 <span className="text-xs text-muted"> 

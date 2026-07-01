@@ -1,3 +1,4 @@
+"use client"
 import { ReadingLog } from '@/lib/types';
 import { Pencil, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';

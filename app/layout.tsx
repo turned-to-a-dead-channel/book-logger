@@ -3,6 +3,7 @@ import TopBar from "./topbar";
 import Footer from "./footer";
 import { Newsreader, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
+import { getDates } from "@/lib/dates";
 import { ModalProvider, useModal } from "@/context/modalcontext";
 import { BooksProvider, useBooks } from "@/context/bookscontext";
 import { UserProvider, useUser } from "@/context/usercontext";
@@ -31,16 +32,18 @@ export const metadata: Metadata = {
 };
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
+  const { todayString } = getDates(new Date());
+
   return (
     <html className={`${newsreader.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}>
       <body className="mb-8It">
         <UserProvider>
           <BooksProvider>
             <ModalProvider>
-              <TopBar></TopBar>
+              <TopBar todayString={todayString}></TopBar>
               <main className="pt-28">{children}</main>
               <Footer></Footer>
-              <ModalRenderer />
+              <ModalRenderer todayString={todayString} />
             </ModalProvider>
           </BooksProvider>
         </UserProvider>

@@ -1,3 +1,4 @@
+"use client"
 import { PagesData } from "@/lib/types";
 
 const DailyAverageStat = ({ data } : { data : PagesData }) => {

@@ -1,10 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Bookmark, BookmarkCheck } from "lucide-react";
-import { dates } from "@/lib/dates";
 import { BookInfoData } from "@/lib/types";
 
-export const CurrentlyReading = ({ data } : { data: BookInfoData[] }) => {
+export const CurrentlyReading = ({ data, todayRaw } : { data: BookInfoData[], todayRaw: Date }) => {
     const [randomQuote, setRandomQuote] = useState<string | undefined>(undefined);
     const [selectedIndex, setSelectedIndex] = useState(0)
 
@@ -23,7 +22,7 @@ export const CurrentlyReading = ({ data } : { data: BookInfoData[] }) => {
     let daysSince;
 
     if (books.date_started) {
-        daysSince = Math.floor((dates.todayRaw.getTime() - new Date(books.date_started!).getTime()) / (1000 * 60 * 60 * 24));
+        daysSince = Math.floor((todayRaw.getTime() - new Date(books.date_started!).getTime()) / (1000 * 60 * 60 * 24));
     }
 
     const totalPages = books.page_count_override ?? books.page_count;

@@ -1,6 +1,6 @@
-import { BookData } from "@/lib/types";
+import { StreakData } from "@/lib/types";
 
-const CurrentStreak = ({ data } : { data : BookData }) => {
+const CurrentStreak = ({ data } : { data : StreakData }) => {
     const { currentStreak, bestStreak, bestStreakMonth, bestStreakYear } = data;
 
     return (

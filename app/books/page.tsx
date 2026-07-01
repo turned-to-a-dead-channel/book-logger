@@ -1,35 +1,23 @@
 'use client';
 import { useModal } from '@/context/modalcontext';
-import { dates } from '@/lib/dates';
+import { useUser } from '@/context/usercontext';
+import { useBooks } from '@/context/bookscontext';
 import { useState, useEffect } from "react";
-import { useRouter } from 'next/navigation';
 import { BookImage, List } from "lucide-react";
 import BooksReadListView from '@/components/booksreadlistview';
 import BooksReadCoverView from '@/components/booksreadcoverview';
 
 const BooksPage = () => {
-    const [user, setUser] = useState<any>(null)
-    const [books, setBooks] = useState<any[]>([])
     const [sortKey, setSortKey] = useState('date_finished');
     const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
     const [view, setView] = useState<'list' | 'cover'>('list');
     const { activeModal, setActiveModal } = useModal();
-    const router = useRouter();
-
-    useEffect(() => {
-        fetch('/api/users')
-            .then(res => res.json())
-            .then(data => {
-            setUser(data)
-            return fetch(`/api/books/${data.user_uid}`)
-            })
-            .then(res => res.json())
-            .then(data => setBooks(data))
-    }, [])
+    const { user } = useUser();
+    const { books } = useBooks();
 
     const finishedThisYear = books.filter(b => {
         if (!b.date_finished) return false
-        return b.status === 'finished' && b.date_finished.includes(dates.currYearNumeric)
+        return b.status === 'finished' && b.date_finished.includes(new Date().getFullYear().toString())    
     })
 
     const sorted = [...finishedThisYear].sort((a, b) => {
