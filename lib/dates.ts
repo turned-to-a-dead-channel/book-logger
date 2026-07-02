@@ -14,6 +14,7 @@ export const getDates = (today : Date) =>  {
     return {
         todayRaw: today,
         todayString: today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+        dayOfTheMonth: today.getDate(),
         currMonthString: today.toLocaleDateString('en-US', { month: 'long' }),
         currMonthNumeric: today.toLocaleDateString('en-US', { month: 'numeric' }),
         currMonthRaw: today.getMonth(),

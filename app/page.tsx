@@ -106,7 +106,7 @@ const HomePage = async () => {
           currMonthRaw={dates.currMonthRaw} 
         />
         <PagesThisYearStat data={{ pagesThisYear, pagesLastYear }} prevYearNumeric = { dates.prevYearNumeric } />
-        <DailyAverageStat data={{ pagesThisMonth, pagesThisYear }} />
+        <DailyAverageStat data={{ pagesThisMonth, pagesThisYear }} dayOfTheMonth={dates.dayOfTheMonth} />
         <CurrentStreak data={{currentStreak: 10, bestStreak: 20, bestStreakMonth: "May", bestStreakYear: 2026}} />
       </div>
 
