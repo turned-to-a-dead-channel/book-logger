@@ -5,5 +5,9 @@ export const getCurrentlyReading = (books: BookInfoData[]) => {
 }
 
 export const getToRead = (books: BookInfoData[]) => {
-    return books.filter(b => b.status === 'to read');
+    return books.filter(b => b.status === 'to read').sort((a, b) => {
+        if (a.priority_order == null) return 1;
+        if (b.priority_order == null) return -1;
+        return a.priority_order - b.priority_order;
+    })
 }

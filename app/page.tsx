@@ -1,19 +1,25 @@
-import CalendarPanel from '@/components/calendar';
-import ReadingLogPanel from '@/components/readinglogs';
-import MonthlyOverview from '@/components/monthlyoverview';
-import { CurrentlyReading } from '@/components/currentlyreading';
+/* ***** IMPORT STATS ***************************************************************************** */
 import PagesThisYearStat from '@/components/stats/pagesthisyearstat';
 import BooksThisYear from '@/components/stats/booksthisyearstat';
 import DailyAverageStat from '@/components/stats/dailyaveragestat';
 import CurrentStreak from '@/components/stats/currentstreakstat';
+/* ***** IMPORT PANELS **************************************************************************** */
+import CalendarPanel from '@/components/calendar';
+import ReadingLogPanel from '@/components/readinglogs';
+import MonthlyOverview from '@/components/monthlyoverview';
+import { CurrentlyReading } from '@/components/currentlyreading';
 import FavoritesPanel from '@/components/favorites';
+import ToRead from "@/components/toread";
+/* ***** IMPORT UTILITIES ************************************************************************* */
 import { getDates } from '@/lib/dates';
+import { getCurrentlyReading, getToRead } from '@/lib/functions';
 import { CalendarData, ReadingLog, MonthData } from '@/lib/types';
-import { format } from 'date-fns';
-import { getUser } from '@/lib/queries/user';
 import { getBooksByUserUid } from '@/lib/queries/books';
 import { getBooksLogs } from '@/lib/queries/bookslog';
-import { getCurrentlyReading, getToRead } from '@/lib/functions';
+import { getUser } from '@/lib/queries/user';
+/* ***** IMPORT DEPENDENCIES ************************************************************************* */
+import { format } from 'date-fns';
+
 
 const HomePage = async () => {
   const user = await getUser();
@@ -134,9 +140,7 @@ const HomePage = async () => {
       */}
       <div className="flex flex-row flex-wrap gap-5 items-stretch justify-center">
         <ReadingLogPanel data={ logs } />
-        <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-          <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">Up next: In Progress</h4>
-        </div>
+        <ToRead data={ toRead } />
       </div>
     </div>
 )};

@@ -29,7 +29,9 @@ export interface BookInfoData {
     subtitle?: string,
     quotes?: BookQuote[],
     cover?: string,
-    cover_override?: string
+    cover_override?: string,
+    priority?: string,
+    priority_order?: number
 }
 
 export interface BooksReadListViewData {

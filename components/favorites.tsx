@@ -13,7 +13,7 @@ const FavoritesPanel = ({ data } : { data: any[] }) => {
                         <div key={`favorites-${index}`}>
                             { book.cover || book.cover_override ? 
                             <img src={book.cover_override ? book.cover_override : book.cover} className="w-full aspect-2/3 object-fill" /> : 
-                            <div className={`flex flex-col min-h-48 w-full p-2 text-center ${getRandomColor(bgColors)}`}>
+                            <div className={`flex flex-col min-h-60 w-full p-2 text-center ${bgColors[index % bgColors.length]}`}>
                                 <div className={`flex text-xs text-textlight border-b uppercase text-wrap pb-2`}>{ book.title }</div>
                                 <div className="flex items-baseline text-textlight text-xs text-left">{ book.author }</div>
                             </div>
