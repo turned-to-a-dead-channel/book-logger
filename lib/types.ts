@@ -31,7 +31,8 @@ export interface BookInfoData {
     cover?: string,
     cover_override?: string,
     priority?: string,
-    priority_order?: number
+    priority_order?: number,
+    prioritycolor?: string
 }
 
 export interface BooksReadListViewData {

@@ -8,7 +8,7 @@ export async function getBooksByUserUid(uid: string) {
       ub.user_books_id, ub.user_books_uid, ub.status, ub.rating, ub.date_started, ub.date_finished, ub.read_number,
       ub.page_count_override, ub.title_override, ub.author_override, ub.published_year_override,
       ub.isbn_override, ub.publisher_override, ub.notes_override, ub.cover_override, ub.current_page, ub.is_favorite, 
-      ub.priority_label_id, json_agg(bq.*) FILTER (WHERE bq.books_quotes_id IS NOT NULL) AS quotes, upl.priority, upl.priority_order, upl.color
+      ub.priority_label_id, json_agg(bq.*) FILTER (WHERE bq.books_quotes_id IS NOT NULL) AS quotes, upl.priority, upl.priority_order, upl.color as priorityColor
     FROM books b
     JOIN user_books ub ON ub.book_id = b.book_id
     LEFT JOIN user_prioritylabels upl ON upl.id = ub.priority_label_id 
