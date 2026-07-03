@@ -4,8 +4,8 @@ import { useUser } from '@/context/usercontext';
 import { useBooks } from '@/context/bookscontext';
 import { useState, useEffect } from "react";
 import { BookImage, List } from "lucide-react";
-import BooksReadListView from '@/components/booksreadlistview';
-import BooksReadCoverView from '@/components/booksreadcoverview';
+import BooksReadListView from '@/components/views/booksreadlistview';
+import BooksReadCoverView from '@/components/views/booksreadcoverview';
 
 const BooksPage = () => {
     const [sortKey, setSortKey] = useState('date_finished');

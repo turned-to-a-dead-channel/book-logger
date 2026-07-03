@@ -1,11 +1,11 @@
 import CalendarPanel from '@/components/calendar';
 import ReadingLogPanel from '@/components/readinglogs';
-import BooksThisYear from '@/components/booksthisyearstat';
 import MonthlyOverview from '@/components/monthlyoverview';
 import { CurrentlyReading } from '@/components/currentlyreading';
-import PagesThisYearStat from '@/components/pagesthisyearstat';
-import DailyAverageStat from '@/components/dailyaveragestat';
-import CurrentStreak from '@/components/currentstreakstat';
+import PagesThisYearStat from '@/components/stats/pagesthisyearstat';
+import BooksThisYear from '@/components/stats/booksthisyearstat';
+import DailyAverageStat from '@/components/stats/dailyaveragestat';
+import CurrentStreak from '@/components/stats/currentstreakstat';
 import FavoritesPanel from '@/components/favorites';
 import { getDates } from '@/lib/dates';
 import { CalendarData, ReadingLog, MonthData } from '@/lib/types';
@@ -13,6 +13,7 @@ import { format } from 'date-fns';
 import { getUser } from '@/lib/queries/user';
 import { getBooksByUserUid } from '@/lib/queries/books';
 import { getBooksLogs } from '@/lib/queries/bookslog';
+import { getCurrentlyReading, getToRead } from '@/lib/functions';
 
 const HomePage = async () => {
   const user = await getUser();
@@ -21,7 +22,8 @@ const HomePage = async () => {
   const today = new Date(); // computed once, server-side, no hydration risk
 
   const goalBooks = user?.goal_books;
-  const currentlyReading = books.filter(b => b.status === 'currently reading');
+  const currentlyReading = getCurrentlyReading(books);
+  const toRead = getToRead(books);
   const favorites = books.filter(b => b.is_favorite);
   const displayedFavorites = favorites.length > 0 ? favorites : books.filter(b => b.rating == 5);
 
