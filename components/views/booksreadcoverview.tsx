@@ -1,6 +1,7 @@
 import { getRandomColor, bgColors, borderColors } from "@/lib/colors";
 import { Star, StarHalf} from 'lucide-react';
 import { BooksReadCoverViewData } from '@/lib/types';
+import { format } from 'date-fns';
 
 const BooksReadCoverView = ({ data, sortKey, sortDir, onSort }: BooksReadCoverViewData ) =>  {
     const getStarType = (rating: number, position: number) => {
@@ -23,11 +24,17 @@ const BooksReadCoverView = ({ data, sortKey, sortDir, onSort }: BooksReadCoverVi
                                         <div className="font-serif font-bold  text-center text-s text-textlight border-b uppercase text-wrap pb-2">{book.title_override ? book.title_override : book.title}</div>
 
                                         <div className="text-center text-xs text-textlight uppercase text-wrap pb-2">{book.author_override ? book.author_override : book.author}</div>
+
                                     </div>
                             }
                         </div>
-                        <div className="text-textlight text-l font-serif font-bold text-wrap mt-2">{book.title_override ? book.title_override : book.title}</div>
-                        <div className="text-muted uppercase text-xs">{book.author_override ? book.author_override : book.author}</div>
+                        <div className="mt-2">
+                            <div className="line-clamp-1 max-w-48 truncate text-white text-md font-serif font-bold text-wrap">{book.title_override ? book.title_override : book.title}</div>
+                        </div>
+                        <div className="text-muted uppercase text-sm mb-1">{book.author_override ? book.author_override : book.author}</div>
+                        <div className="text-xs text-muted text-wrap">Finished: {format(book.date_finished, "MM-dd-yy")}</div> 
+                        <div className="text-xs text-muted text-wrap">{book.page_count_override ? book.page_count_override : book.page_count} pages</div>
+
                         <div className="mt-3">
                             {
                                 book.rating ? 
