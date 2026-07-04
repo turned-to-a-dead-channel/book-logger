@@ -3,7 +3,6 @@ import { getRandomColor, bgColors } from "@/lib/colors";
 import { BookInfoData } from "@/lib/types";
 
 const ToRead = ({ data } : {data : BookInfoData[]} ) => {
-    console.log(data);
     return (
         <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
             <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">To Read Shelf</h4>

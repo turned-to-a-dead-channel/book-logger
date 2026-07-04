@@ -1,8 +1,7 @@
 "use client"
-import { useState, useEffect } from "react";
-import { getDates } from '@/lib/dates';
+import { useState } from "react";
 import { BooksThisYearData } from "@/lib/types";
-import { ChevronUp, ChevronDown, Equal } from 'lucide-react';
+import { ChevronUp, ChevronDown, Equal, MoveRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 const BooksThisYear = ({ data, lastMonthString, currYearNumeric, currMonthRaw  } : { data: BooksThisYearData, lastMonthString: string, currYearNumeric: string, currMonthRaw: number } ) => {
@@ -15,7 +14,7 @@ const BooksThisYear = ({ data, lastMonthString, currYearNumeric, currMonthRaw  }
     return (
         <div className="relative overflow-hidden bg-surface border border-edge rounded-lg p-5 flex-1 min-w-64 after:content-[''] after:rounded-full after:bg-teal-700 after:absolute after:-bottom-8 after:-right-8 after:p-7 after:h-32 after:w-32 after:blur-md after:opacity-15">
             <div className="flex flex-row items-start justify-between">
-                <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall cursor-pointer hover:text-amber-500" onClick={() => router.replace("/books")}>Books Read</h4>
+                <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall cursor-pointer hover:text-amber-500" onClick={() => router.replace("/books")}>Books Read <MoveRight className="inline h-4 w-4 pb-0.5" /></h4>
                 <div className="flex flex-row gap-1">
                     <span className={`${selected === "month" ? "text-amber-500" : "text-muted" } text-textsmall uppercase cursor-pointer`} onClick={() => setSelected("month")}>Month</span>
                     <span className="text-muted text-textsmall uppercase">|</span>
