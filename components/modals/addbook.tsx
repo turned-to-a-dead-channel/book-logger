@@ -2,7 +2,8 @@
 import { useEffect, useState } from "react";
 import { X } from 'lucide-react';
 import { ModalProps } from "@/lib/types";
-
+import { useBooks } from "@/context/bookscontext";
+import { useRouter } from "next/navigation";
 
 const AddBookModal = ({ isOpen, onClose, userUid }: ModalProps & { userUid: string }) => {
     const [title, setTitle] = useState('');
@@ -13,6 +14,8 @@ const AddBookModal = ({ isOpen, onClose, userUid }: ModalProps & { userUid: stri
     const [isbn, setIsbn] = useState('');
     const [coverUrl, setCoverUrl] = useState('');
     const [status, setStatus] = useState('');
+    const { refresh } = useBooks();
+    const router = useRouter();
 
     useEffect(() => {
         if (isOpen) document.body.style.overflow = 'hidden'
@@ -39,11 +42,15 @@ const AddBookModal = ({ isOpen, onClose, userUid }: ModalProps & { userUid: stri
                             <div className="ml-5 flex flex-col flex-1">
                                 <form id="add-book-form" autoComplete="off" onSubmit={async (e) => {
                                     e.preventDefault();
-                                    await fetch('/api/books', {
+                                    const res = await fetch('/api/books', {
                                         method: 'POST',
                                         headers: { 'Content-Type': 'application/json' },
                                         body: JSON.stringify({ userUid, title, author, totalPages, publicationYear, publisher, isbn, coverUrl, status })
                                     });
+                                    if (res.ok) {
+                                        refresh();
+                                        router.refresh();
+                                    }
                                     handleClose();
                                 }}>
 

@@ -1,12 +1,13 @@
 "use client";
 import { useUser } from './usercontext';
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 const BooksContext = createContext<{
   books: any[];
   logs: any[];
   isLoading: boolean;
-}>({ books: [], logs: [], isLoading: true });
+  refresh: () => void;
+}>({ books: [], logs: [], isLoading: true, refresh: () => {}});
 
 export const BooksProvider = ({ children }: { children: React.ReactNode }) => {
     const { user } = useUser();
@@ -14,7 +15,7 @@ export const BooksProvider = ({ children }: { children: React.ReactNode }) => {
     const [logs, setLogs] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
+    const fetchData = useCallback(() => {
         if (!user) return;
 
         fetch(`/api/books/${user.user_uid}`)
@@ -27,9 +28,13 @@ export const BooksProvider = ({ children }: { children: React.ReactNode }) => {
         .then(data => setLogs(data))
         .finally(() => setIsLoading(false))
     }, [user])
+
+    useEffect(() => {
+        fetchData();
+    }, [fetchData])
     
     return (
-        <BooksContext.Provider value={{ books, logs, isLoading }} >
+        <BooksContext.Provider value={{ books, logs, isLoading, refresh: fetchData }} >
             {children}
         </BooksContext.Provider>
     )

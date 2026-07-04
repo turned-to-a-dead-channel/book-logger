@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react';
 import { ModalProps } from "@/lib/types";
 import { X } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useBooks } from "@/context/bookscontext";
 
 const SessionModal = ({ isOpen, onClose, currentlyReading, todayString }: ModalProps & { currentlyReading: any[], todayString: string }) => {
     const [selectedBook, setSelectedBook] = useState<any>(null);
@@ -9,6 +11,8 @@ const SessionModal = ({ isOpen, onClose, currentlyReading, todayString }: ModalP
     const [endPage, setEndPage] = useState<number | null>(null);
     const [quote, setQuote] = useState("");
     const pagesRead = endPage !== null ? endPage - startPage : null;
+    const { refresh } = useBooks();
+    const router = useRouter();
 
     useEffect(() => {
         if (isOpen && currentlyReading.length > 0) setSelectedBook(currentlyReading[0]);
@@ -74,11 +78,15 @@ const SessionModal = ({ isOpen, onClose, currentlyReading, todayString }: ModalP
                             <div className="ml-5 flex flex-col flex-1">
                                 <form id="session-form" onSubmit={async (e) => {
                                     e.preventDefault();
-                                    await fetch('/api/books_log', {
+                                    const res = await fetch('/api/books_log', {
                                         method: 'POST',
                                         headers: { 'Content-Type': 'application/json' },
                                         body: JSON.stringify({ userBooksuid: selectedBook.user_books_uid, startPage, endPage, quote })
                                     });
+                                    if (res.ok) {
+                                        refresh();
+                                        router.refresh();
+                                    }
                                     handleClose();
                                 }}>
                                     <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall mb-2">Book Details</h4>
