@@ -10,7 +10,7 @@ const CalendarPanel = ({ data }: { data: CalendarData }) => {
 
     const datesForCalendar = useMemo(() => {
         const allDays = eachDayOfInterval({start: monthStart, end: monthEnd});
-        const startOffset = getDay(monthStart);
+        const startOffset = (getDay(monthStart) + 6) % 7; // adjusted for Monday start
 
         return { allDays, startOffset };
 
