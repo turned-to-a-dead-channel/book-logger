@@ -5,7 +5,7 @@ import { BookInfoData } from "@/lib/types";
 const ToRead = ({ data } : {data : BookInfoData[]} ) => {
     return (
         <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
-            <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall">To Read Shelf</h4>
+            <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall h-6">To Read Shelf</h4>
             <h1 className="font-serif mt-2 pb-7 text-2xl text-textlight">Coming Up Next</h1>
             { data.length > 0 ? 
                 <div className="grid grid-cols-[repeat(auto-fill,minmax(8rem,1fr))] gap-4">
