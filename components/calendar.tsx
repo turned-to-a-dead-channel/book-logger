@@ -1,12 +1,14 @@
 "use client"
 import { CalendarData } from '@/lib/types';
 import { useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, getDay, isSameDay } from 'date-fns';
 
 const CalendarPanel = ({ data }: { data: CalendarData }) => {
     const today = useMemo(() => new Date(), []);
     const monthStart = startOfMonth(today);
     const monthEnd = endOfMonth(today);
+    const router = useRouter();
 
     const datesForCalendar = useMemo(() => {
         const allDays = eachDayOfInterval({start: monthStart, end: monthEnd});
@@ -59,7 +61,9 @@ const CalendarPanel = ({ data }: { data: CalendarData }) => {
                                             src={book.cover}
                                             title={book.title}
                                             alt={book.title}
-                                            className="w-full aspect-2/3 object-cover rounded-sm"
+                                            className="w-full aspect-2/3 object-cover rounded-sm cursor-pointer"
+                                            
+                                            onClick={() => router.push(`/books/${book.ub_uid}`)} 
                                             />
                                         ))}
                                     </div>

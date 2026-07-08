@@ -1,8 +1,11 @@
 "use client";
 import { getRandomColor, bgColors } from "@/lib/colors";
 import { BookInfoData } from "@/lib/types";
+import { useRouter } from 'next/navigation';
 
 const ToRead = ({ data } : {data : BookInfoData[]} ) => {
+    const router = useRouter();
+
     return (
         <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
             <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall h-6">To Read Shelf</h4>
@@ -13,8 +16,8 @@ const ToRead = ({ data } : {data : BookInfoData[]} ) => {
                         data.map((book, index) => (
                             <div className="mb-4" key={`toread-${index}`}>
                                 { book.cover || book.cover_override ? 
-                                <img src={book.cover_override ? book.cover_override : book.cover} className="w-full aspect-2/3 object-fill" /> : 
-                                <div className={`flex flex-col aspect-2/3 w-full p-2 text-center ${bgColors[index % bgColors.length]}`}>
+                                <img src={book.cover_override ? book.cover_override : book.cover} className="cursor-pointer w-full aspect-2/3 object-fill" onClick={() => {router.push(`books/${book.user_books_uid}`)}} /> : 
+                                <div className={`cursor-pointer flex flex-col aspect-2/3 w-full p-2 text-center ${bgColors[index % bgColors.length]}`} onClick={() => {router.push(`books/${book.user_books_uid}`)}} >
                                     <div className={`flex text-xs text-textlight border-b uppercase text-wrap pb-2`}>{ book.title }</div>
                                     <div className="flex text-textlight text-xs text-left mt-auto">{ book.author }</div>
                                 </div>

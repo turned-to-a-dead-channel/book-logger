@@ -2,8 +2,11 @@
 import { ReadingLog } from '@/lib/types';
 import { Pencil, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
+import { useRouter } from "next/navigation";
 
 const ReadingLogPanel = ({ data } : { data: ReadingLog[] }) => {
+    const router = useRouter();
+
     return (
         <div className="bg-surface border border-edge rounded-lg p-5 flex-1">
             <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall h-6">Latest Logs</h4>
@@ -23,7 +26,7 @@ const ReadingLogPanel = ({ data } : { data: ReadingLog[] }) => {
                             <div>
                                 { 
                                     log.cover || log.cover_override ? 
-                                    (<img className="h-9 aspect-2/3 object-cover rounded-sm" src={log.cover_override ? log.cover_override : log.cover} />) :
+                                    (<img onClick={() => {router.push(`books/${log.user_books_uid}`)}} className="h-9 aspect-2/3 object-cover rounded-sm cursor-pointer" src={log.cover_override ? log.cover_override : log.cover} />) :
                                     (<div>Book</div>)
                                 }                                
                             </div>

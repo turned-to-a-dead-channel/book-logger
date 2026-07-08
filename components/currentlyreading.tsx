@@ -2,10 +2,12 @@
 import { useState, useEffect } from "react";
 import { Bookmark, BookmarkCheck } from "lucide-react";
 import { BookInfoData } from "@/lib/types";
+import { useRouter } from 'next/navigation';
 
 export const CurrentlyReading = ({ data, todayRaw } : { data: BookInfoData[], todayRaw: Date }) => {
     const [randomQuote, setRandomQuote] = useState<string | undefined>(undefined);
     const [selectedIndex, setSelectedIndex] = useState(0)
+    const router = useRouter();
 
     const books = data?.[selectedIndex];
 
@@ -48,7 +50,7 @@ export const CurrentlyReading = ({ data, todayRaw } : { data: BookInfoData[], to
                     <div className="flex h-full">
                         { cover ? (
                             <div className="w-24 shrink-0">
-                                <img src={cover} />
+                                <img src={cover} className="cursor-pointer" onClick={() => router.push(`/books/${books.user_books_uid}`)} />
                             </div>
                         ) : (
                             <div className="flex flex-col justify-between bg-teal-600 min-h-36 w-24 shrink-0 p-2 text-center">

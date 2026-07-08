@@ -1,7 +1,10 @@
 "use client";
 import { getRandomColor, bgColors } from "@/lib/colors";
+import { useRouter } from "next/navigation";
 
 const FavoritesPanel = ({ data } : { data: any[] }) => {
+    const router = useRouter();
+
     return (
         <div className="bg-surface border border-edge rounded-lg p-5 flex-1 min-w-64">
           <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall h-6">Highly Rated Books</h4>
@@ -12,7 +15,7 @@ const FavoritesPanel = ({ data } : { data: any[] }) => {
                     data.map((book, index) => (
                         <div key={`favorites-${index}`}>
                             { book.cover || book.cover_override ? 
-                            <img src={book.cover_override ? book.cover_override : book.cover} className="w-full aspect-2/3 object-fill" /> : 
+                            <img src={book.cover_override ? book.cover_override : book.cover} className="w-full aspect-2/3 object-fill cursor-pointer" onClick={() => router.push(`/books/${book.user_books_uid}`)} /> : 
                             <div className={`flex flex-col min-h-60 w-full p-2 text-center ${bgColors[index % bgColors.length]}`}>
                                 <div className={`flex text-xs text-textlight border-b uppercase text-wrap pb-2`}>{ book.title }</div>
                                 <div className="flex items-baseline text-textlight text-xs text-left">{ book.author }</div>
