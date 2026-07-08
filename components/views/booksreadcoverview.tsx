@@ -1,14 +1,10 @@
 import { getRandomColor, bgColors, borderColors } from "@/lib/colors";
 import { Star, StarHalf} from 'lucide-react';
+import { getStarType } from '@/lib/functions';
 import { BooksReadCoverViewData } from '@/lib/types';
 import { format } from 'date-fns';
 
 const BooksReadCoverView = ({ data, sortKey, sortDir, onSort }: BooksReadCoverViewData ) =>  {
-    const getStarType = (rating: number, position: number) => {
-        if (rating >= position) return 'full';
-        if (rating >= position - 0.5) return 'half';
-        return 'empty';
-    }
 
     return (
         <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">

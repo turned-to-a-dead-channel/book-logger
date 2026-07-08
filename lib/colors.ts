@@ -4,3 +4,9 @@ export const borderColors=["border-teal-700", "border-emerald-600", "border-ambe
 export const getRandomColor = (colorsArray : string[]) => {
     return colorsArray[(Math.floor(Math.random() * colorsArray.length))];
 }
+
+export const badgeStatus : Record<string, string> = {
+    "finished" : "border-emerald-500 text-emerald-500",
+    "currently reading" : "border-amber-500 text-amber-500",
+    "to read" : "border-rose-500 text-rose-500"
+}

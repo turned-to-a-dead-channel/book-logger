@@ -7,10 +7,10 @@ export interface StreakData {
 }
 
 interface BookQuote {
-  books_quotes_id: number
-  books_quotes_uid: string
-  ub_id: number
-  quote: string
+  books_quotes_id: number,
+  books_quotes_uid: string,
+  ub_id: number,
+  quote: string,
   page_number?: number
 }
 export interface BookInfoData {
@@ -32,19 +32,20 @@ export interface BookInfoData {
     cover_override?: string,
     priority?: string,
     priority_order?: number,
-    prioritycolor?: string
+    prioritycolor?: string,
+    user_books_uid?: string
 }
 
 export interface BooksReadListViewData {
-    data: any[];
-    sortKey: string;
-    sortDir: 'asc' | 'desc';
-    onSort: (key: string) => void;
+    data: any[],
+    sortKey: string,
+    sortDir: 'asc' | 'desc',
+    onSort: (key: string) => void,
 }
 export interface BooksReadCoverViewData {
-    data: any[];
-    sortKey: string;
-    sortDir: 'asc' | 'desc';
+    data: any[],
+    sortKey: string,
+    sortDir: 'asc' | 'desc',
     onSort: (key: string) => void;
 }
 export interface BooksThisYearData {
@@ -72,6 +73,7 @@ export interface Book {
   id: string;
   title: string;
   cover: string;
+  ub_uid: string
 }
 
 export interface CalendarData {
@@ -84,20 +86,21 @@ export interface MonthData {
     status?: "completed" | "upcoming" | "current"
 }
 export interface ReadingLog {
-  books_logs_uid: string;
-  date_logged: string;
-  title: string;
-  title_override?: string;
-  author: string;
+  books_logs_uid: string,
+  date_logged: string,
+  title: string,
+  title_override?: string,
+  author: string,
   author_override?: string,
-  cover?: string;
-  cover_override?: string;
-  start_page: number;
-  end_page: number;
+  cover?: string,
+  cover_override?: string,
+  start_page: number,
+  end_page: number,
+  user_books_uid: string
 }
 
 export type ModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen: boolean,
+  onClose: () => void
 }
 
