@@ -42,7 +42,7 @@ export async function getBooksLogs(logData: { userUid: string}) {
     const { userUid } = logData;
 
     const result = await pool.query(`
-        SELECT bl.*, b.cover, b.title, b.author, ub.cover_override, ub.title_override, ub.author_override
+        SELECT bl.*, b.cover, b.title, b.author, ub.user_books_uid, ub.cover_override, ub.title_override, ub.author_override
         FROM users u
         JOIN user_books ub ON ub.user_id = u.user_id
         JOIN books_log bl ON bl.bl_ub_id = ub.user_books_id

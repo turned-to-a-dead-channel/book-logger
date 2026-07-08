@@ -96,6 +96,7 @@ const HomePage = async () => {
         id: log.books_logs_uid,
         title: log.title_override ?? log.title,
         cover: log.cover_override ?? log.cover,
+        ub_uid: log.user_books_uid
       });
 
       return acc;
@@ -103,7 +104,6 @@ const HomePage = async () => {
   }
 
   const calendarData = groupLogsByDate(logs);
-
 
   return (
     <div className='ml-5 mr-5 flex flex-col justify-center gap-5'>
