@@ -12,7 +12,7 @@ export async function getBooksByUserUid(uid: string) {
     FROM books b
     JOIN user_books ub ON ub.book_id = b.book_id
     LEFT JOIN user_prioritylabels upl ON upl.id = ub.priority_label_id 
-    LEFT JOIN books_quotes bq ON bq.ub_id = ub.user_books_id
+    LEFT JOIN books_quotes bq ON bq.bq_ub_id = ub.user_books_id
     JOIN users u ON u.user_id = ub.user_id
     WHERE u.user_uid = $1
     GROUP BY
@@ -37,7 +37,7 @@ export async function getBookDetailByUid(uid: string) {
     FROM user_books ub 
     JOIN books b ON b.book_id = ub.book_id
     LEFT JOIN user_prioritylabels upl ON upl.id = ub.priority_label_id
-    LEFT JOIN books_quotes bq ON bq.ub_id = ub.user_books_id
+    LEFT JOIN books_quotes bq ON bq.bq_ub_id = ub.user_books_id
     LEFT JOIN books_log bl ON bl.bl_ub_id = ub.user_books_id
     LEFT JOIN books_thoughts bt on bt.bt_ub_id = ub.user_books_id
     LEFT JOIN books_reviews br on br.br_ub_id = ub.user_books_id

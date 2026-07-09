@@ -11,7 +11,7 @@ interface BookQuote {
   books_quotes_uid: string,
   ub_id: number,
   quote: string,
-  page_number?: string
+  page?: string
 }
 
 interface BookThought {

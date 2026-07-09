@@ -66,7 +66,7 @@ const ThoughtsList = ({ data } : { data: BookInfoData }) => {
                         <div className="mb-1">
                             {
                                 data.thoughts.map((bookThought, index) => (
-                                    <div key={bookThought.books_thoughts_uid} className="mt-2 w-4/5 font-mono text-lg text-muted">
+                                    <div key={bookThought.books_thoughts_uid} className="mt-2 w-4/5 font-mono text-lg text-muted group">
                                         {bookThought.thought}
 
                                         {bookThought.page && (<span className="ml-1 text-xs">{`(${bookThought.page})`}</span>)}

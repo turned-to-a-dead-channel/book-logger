@@ -1,4 +1,5 @@
 import ThoughtsList from '@/components/books/ThoughtsList';
+import QuotesList from '@/components/books/QuotesList';
 import { getBookDetailByUid } from "@/lib/queries/books";
 import { badgeStatus } from "@/lib/colors";
 import { getStarType } from '@/lib/functions';
@@ -159,6 +160,8 @@ const BookPage = async ({ params } : { params: Promise<{ uid: string }> }) => {
                 <ThoughtsList data={bookDetail} />
 
                 {/* ***** QUOTES ************************************************************** */}
+                <QuotesList data={bookDetail} />
+                {/*
                 <div className="mt-10">
                     <h1 className="text-3xl font-serif text-textlight border-b border-edge mb-5">Quotes</h1>
                         {
@@ -177,6 +180,7 @@ const BookPage = async ({ params } : { params: Promise<{ uid: string }> }) => {
                             <div className="text-center text-xs text-muted font-mono tracking-wider-than-widest uppercase mt-2">No quotes yet</div>
                         }
                 </div>
+                */}
             </div>
         </div>
     )

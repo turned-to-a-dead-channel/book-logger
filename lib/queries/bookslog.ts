@@ -25,7 +25,7 @@ export async function postBookLog(logData: { userBooksuid: string, dateLogged: D
         `, [endPage, userBooksuid]);
 
         if (logData.quote) await client.query(`
-            INSERT INTO books_quotes (ub_id, quote)
+            INSERT INTO books_quotes (bq_ub_id, quote)
             VALUES ($1, $2)
         `, [userBooksId, logData.quote]);
 
