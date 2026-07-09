@@ -11,7 +11,15 @@ interface BookQuote {
   books_quotes_uid: string,
   ub_id: number,
   quote: string,
-  page_number?: number
+  page_number?: string
+}
+
+interface BookThought {
+  books_thoughts_id: number,
+  books_thoughts_uid: string,
+  ub_id: number,
+  thought: string,
+  page?: string
 }
 export interface BookInfoData {
     title: string,
@@ -33,7 +41,8 @@ export interface BookInfoData {
     priority?: string,
     priority_order?: number,
     prioritycolor?: string,
-    user_books_uid?: string
+    user_books_uid: string,
+    thoughts?: BookThought[]
 }
 
 export interface BooksReadListViewData {

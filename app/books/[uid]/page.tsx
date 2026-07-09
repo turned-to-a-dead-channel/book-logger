@@ -1,3 +1,4 @@
+import ThoughtsList from '@/components/books/ThoughtsList';
 import { getBookDetailByUid } from "@/lib/queries/books";
 import { badgeStatus } from "@/lib/colors";
 import { getStarType } from '@/lib/functions';
@@ -155,15 +156,7 @@ const BookPage = async ({ params } : { params: Promise<{ uid: string }> }) => {
                             }
                     </div>
 
-                {/* ***** THOUGHTS ************************************************************ */}  
-                <div className="mt-10">
-                    <h1 className="text-3xl font-serif text-textlight border-b border-edge mb-2">Thoughts</h1>
-                        {
-                        bookDetail.thoughts ? 
-                            <div className="mb-1">Thoughts will go here</div> :
-                            <div className="text-center text-xs text-muted font-mono tracking-wider-than-widest uppercase mt-2">No thoughts yet</div>
-                        }
-                </div>
+                <ThoughtsList data={bookDetail} />
 
                 {/* ***** QUOTES ************************************************************** */}
                 <div className="mt-10">

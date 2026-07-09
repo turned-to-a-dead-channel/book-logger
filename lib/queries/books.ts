@@ -31,7 +31,9 @@ export async function getBookDetailByUid(uid: string) {
       ub.*,
       upl.priority, upl.color, 
       json_agg(DISTINCT bq.*) FILTER (WHERE bq.books_quotes_id IS NOT NULL) AS quotes,
-      json_agg(DISTINCT bl.*) FILTER (WHERE bl.books_logs_id IS NOT NULL) AS logs
+      json_agg(DISTINCT bl.*) FILTER (WHERE bl.books_logs_id IS NOT NULL) AS logs,
+      json_agg(DISTINCT bt.*) FILTER (WHERE bt.books_thoughts_id IS NOT NULL) AS thoughts,
+      json_agg(DISTINCT br.*) FILTER (WHERE br.books_reviews_id IS NOT NULL) AS reviews
     FROM user_books ub 
     JOIN books b ON b.book_id = ub.book_id
     LEFT JOIN user_prioritylabels upl ON upl.id = ub.priority_label_id
