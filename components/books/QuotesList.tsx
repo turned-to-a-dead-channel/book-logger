@@ -10,9 +10,14 @@ const QuotesList = ({ data } : { data: BookInfoData }) => {
     const [pageRef, setPageRef] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [editingQuote, setEditingQuote] = useState('');
+    const [currentPage, setCurrentPage] = useState(0);
     const router = useRouter();
 
     const userBooksuid = data.user_books_uid;
+    const pageSize = 3;
+    const paginated = data.quotes!.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
+    const numOfPages = Math.ceil(data.quotes!.length / pageSize);    
+    const numOfPagesArr = Array.from({ length: numOfPages }, (_, i) => i + 1);
 
     const handleClose = () => {
         setQuote('');
@@ -81,7 +86,7 @@ const QuotesList = ({ data } : { data: BookInfoData }) => {
                     data.quotes ? 
                         <div className="mb-1">
                             {
-                                data.quotes.map((bookQuote, index) => (
+                                paginated.map((bookQuote, index) => (
                                     editingQuote === bookQuote.books_quotes_uid ?
                                     
                                         <div key={`${bookQuote.books_quotes_uid}`}>
@@ -89,7 +94,7 @@ const QuotesList = ({ data } : { data: BookInfoData }) => {
                                         </div> 
                                     :
                                         <div className="group flex flex-row" key={`${bookQuote.books_quotes_uid}`}>
-                                            <div className={`mt-6 font-serif text-xl text-textlight mx-auto max-w-4/5 pb-6 tracking-wide ${index < (data.quotes!.length - 1) && 'border-b border-edge'}`}>
+                                            <div className={`mt-6 font-serif text-xl text-textlight mx-auto w-4/5 pb-6 tracking-wide ${index < (paginated.length - 1) && 'border-b border-edge'}`}>
                                                 <span className="text-amber-500">&ldquo;&nbsp;</span>
                                                 {bookQuote.quote}
                                                 <span className="text-amber-500">&nbsp;&rdquo;</span>
@@ -123,6 +128,21 @@ const QuotesList = ({ data } : { data: BookInfoData }) => {
                                         </div>
                                 ))
                             }
+                            
+                            { data.quotes.length > pageSize &&
+                                <div className="text-md text-muted flex flex-row justify-end">
+                                    {numOfPagesArr.map((page, index) => (
+                                        <div key={`page-${numOfPagesArr[index]}`} className={`cursor-pointer ${currentPage + 1 === numOfPagesArr[index] && 'text-amber-500'} hover:text-amber-400 transform duration-300 ml-5`} onClick={(e) => {
+                                            e.preventDefault();
+                                            setCurrentPage(numOfPagesArr[index] - 1);
+
+                                        }}>
+                                            {numOfPagesArr[index]}
+                                        </div>
+                                    ))}
+                                </div>
+                            }
+                            
 
                             {
                                 !addQuote ? 
