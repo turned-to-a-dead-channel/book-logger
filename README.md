@@ -6,10 +6,3 @@ Dashboard:<br/>
 Individual Book Page:<br/>
 <img width="1497" alt="book-page" src="https://github.com/user-attachments/assets/2c5672b6-ee8b-4459-bc2d-b56aca4c17eb" />
 
-<hr />
-
-Overview (Cover View):<br/>
-<img width="1497" alt="cover-view" src="https://github.com/user-attachments/assets/aea8accc-e580-452f-9f06-4ed253c8dc47" />
-
-
-
