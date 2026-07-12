@@ -1,7 +1,7 @@
 import pool from '@/lib/db'
 
-export async function postBookLog(logData: { userBooksuid: string, dateLogged: Date, startPage: number, endPage: number, quote?: string}) {
-    const { userBooksuid, dateLogged, startPage, endPage } = logData;
+export async function postBookLog(logData: { userBooksuid: string, dateLogged: Date, startPage: number, endPage: number, quote?: string, isFinished?: boolean}) {
+    const { userBooksuid, dateLogged, startPage, endPage, isFinished } = logData;
     const client = await pool.connect();
 
     try {
@@ -28,6 +28,10 @@ export async function postBookLog(logData: { userBooksuid: string, dateLogged: D
             INSERT INTO books_quotes (bq_ub_id, quote)
             VALUES ($1, $2)
         `, [userBooksId, logData.quote]);
+
+        if (logData.isFinished) await client.query(`
+            UPDATE user_books SET status = 'finished', date_finished = $2 WHERE user_books_uid = $1
+        `, [userBooksuid, dateLogged])
 
         await client.query('COMMIT');
     } catch (e) {

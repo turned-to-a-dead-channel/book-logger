@@ -22,7 +22,7 @@ export const BooksProvider = ({ children }: { children: React.ReactNode }) => {
         .then(res => res.json())
         .then(data => {
         setBooks(data)
-        return fetch(`/api/books_log/${user.user_uid}`)
+        return fetch(`/api/books_log/user/${user.user_uid}`)
         })
         .then(res => res.json())
         .then(data => setLogs(data))
