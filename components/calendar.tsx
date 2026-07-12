@@ -26,7 +26,7 @@ const CalendarPanel = ({ data }: { data: CalendarData }) => {
             <h1 className="font-serif mt-2 pb-7 text-2xl text-textlight">
                 {format(today, "MMMM")} {format(today, "y")}
             </h1>
-            <div className="p-2 pt-8 rounded-lg">
+            <div className="p-2 rounded-lg">
                 <div className="grid grid-cols-7 gap-2 w-full auto-rows-fr">
                     {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, i) => (
                         <div key={i} className='text-muted text-sm text-center pb-4'>
