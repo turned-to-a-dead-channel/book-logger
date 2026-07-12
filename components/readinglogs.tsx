@@ -12,7 +12,7 @@ const ReadingLogPanel = ({ data } : { data: ReadingLog[] }) => {
             <h4 className="text-muted font-mono uppercase tracking-wider-than-widest text-textsmall h-6">Latest Logs</h4>
             <h1 className="font-serif mt-2 pb-7 text-2xl text-textlight">Reading Logs</h1>
             {
-                data.slice(0,12).map((log, index) => (
+                data.slice(0,13).map((log, index) => (
                     <div className="flex flex-row items-center border-b border-edge mb-5 pb-3" key={log.books_logs_uid}>
                         <div className='flex flex-col text-center'>
                             <div className="font-sans text-white">

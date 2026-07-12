@@ -21,12 +21,15 @@ const LogsList = ({ data } : { data: BookInfoData })=> {
 
     const [startPage, setStartPage] = useState<number | undefined>(lastEndPage);
     const [endPage, setEndPage] = useState(lastEndPage);
-        const [dateLogged, setDateLogged] = useState(today);
+    const [dateLogged, setDateLogged] = useState(today);
 
     const handleClose = () => {
         setIsAdding(false);
         setIsFinished(false);
         setEditingLog('');
+        setStartPage(lastEndPage);
+        setEndPage(lastEndPage);
+        setDateLogged(today);
     }
 
     {/* ***** BADGES ****************************************************************************** */}
@@ -43,9 +46,19 @@ const LogsList = ({ data } : { data: BookInfoData })=> {
     const LogForm = (
         <form onSubmit={async (e) => {
             e.preventDefault();
+            setIsSubmitting(true);
 
             if (editingLog !== "") {
-
+                const res = await fetch(`../api/books_log/log/${editingLog}`, {
+                    method: 'PATCH', 
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ uid: editingLog, dateLogged, startPage, endPage, isFinished})
+                })
+                
+                if (res.ok) {
+                    router.refresh();
+                    handleClose();
+                }
             } else {
                 const res = await fetch(`../api/books_log/`, {
                     method: 'POST',
@@ -58,6 +71,8 @@ const LogsList = ({ data } : { data: BookInfoData })=> {
                     handleClose();
                 }
             }
+            
+            setIsSubmitting(false);
         }}>
             <div className="mt-5 border border-edge p-5 rounded-md ">
                 <div className="flex flex-row justify-between items-center">
@@ -121,32 +136,62 @@ const LogsList = ({ data } : { data: BookInfoData })=> {
 
     return (
         <div className="mt-10">
-            <h1 className="text-3xl font-serif text-textlight border-b border-edge mb-2">Logs</h1>
+            <h1 className="text-3xl font-serif text-textlight border-b border-edge mb-2">Logs</h1>                
                 {    
                 data.logs ? 
                     (
                         <>
                             {
                             data.logs.map((log: any, index: number) => (
-                                <div key={log.books_logs_uid} className="group grid grid-cols-[1fr_1fr_1fr_1fr_auto] gap-4 mb-4 w-full items-center">
-                                    <div className="font-sans text-muted uppercase mr-10">
-                                        {format(new Date(log.date_logged + 'T12:00:00'), 'MMMM d, y')}
+                                editingLog === log.books_logs_uid 
+                                ? 
+                                    <div key={`${log.books_logs_uid}`}>
+                                        { LogForm }
+                                    </div> 
+                                :
+                                    <div key={log.books_logs_uid} className="group grid grid-cols-[1fr_1fr_1fr_1fr_auto] gap-4 mb-4 w-full items-center">
+                                        <div className="font-sans text-muted uppercase mr-10">
+                                            {format(new Date(log.date_logged + 'T12:00:00'), 'MMMM d, y')}
+                                        </div>
+                                        <div className="text-muted text-md mr-10">
+                                            page {log.start_page} - {log.end_page} 
+                                        </div>
+                                        <div>
+                                            { log.date_logged === data.date_started?.toLocaleDateString("en-ca") ? began : log.date_logged === data.date_finished?.toLocaleDateString("en-ca") ? finished : session}
+                                        </div>
+                                        <div className="text-amber-500 text-md mr-10">
+                                            +{log.end_page - log.start_page} 
+                                            <span className='text-xs text-muted'>&nbsp;pages</span>
+                                        </div>
+                                        <div className='flex flex-row text-muted justify-end'>
+                                            <Pencil 
+                                                className='mr-3 opacity-0 hover:text-amber-500 transition duration-200 w-6 h-6 group-hover:opacity-100'
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    setDateLogged(log.date_logged);
+                                                    setStartPage(log.start_page);
+                                                    setEndPage(log.end_page);
+                                                    setEditingLog(log.books_logs_uid);
+                                                }}
+                                            />
+                                            <Trash2 
+                                                className='w-6 h-6 opacity-0 hover:text-amber-500 transition duration-200 group-hover:opacity-100' 
+                                                onClick = {async (e) => {
+                                                    e.preventDefault();
+                                                    if (!window.confirm('Delete this log?')) return;
+                                                    const res = await fetch(`../api/books_log/log/${log.books_logs_uid}`, {
+                                                        method: 'DELETE',
+                                                        headers: {'Content-Type': 'application/json'},
+                                                        body: JSON.stringify({ uid: log.books_logs_uid })
+                                                    });
+                                                    if (res.ok) {
+                                                        router.refresh();
+                                                    }
+                                                    handleClose();
+                                                }}
+                                            />
+                                        </div>
                                     </div>
-                                    <div className="text-muted text-md mr-10">
-                                        page {log.start_page} - {log.end_page} 
-                                    </div>
-                                    <div>
-                                        { log.date_logged === data.date_started?.toLocaleDateString("en-ca") ? began : log.date_logged === data.date_finished?.toLocaleDateString("en-ca") ? finished : session}
-                                    </div>
-                                    <div className="text-amber-500 text-md mr-10">
-                                        +{log.end_page - log.start_page} 
-                                        <span className='text-xs text-muted'>&nbsp;pages</span>
-                                    </div>
-                                    <div className='flex flex-row text-muted justify-end'>
-                                        <Pencil className='mr-3 opacity-0 hover:text-amber-500 transition duration-200 w-6 h-6 group-hover:opacity-100'/>
-                                        <Trash2 className='w-6 h-6 opacity-0 hover:text-amber-500 transition duration-200 group-hover:opacity-100' />
-                                    </div>
-                                </div>
                             ))}
                     
                             { (data.status === "currently reading" && !isAdding) ? (
@@ -154,14 +199,12 @@ const LogsList = ({ data } : { data: BookInfoData })=> {
                                     e.preventDefault();
                                     setIsAdding(true);
                                 }}>
-                                    Add Log
+                                    { isSubmitting && editingLog ? "Updating...": isSubmitting && !editingLog ? "Adding..." : editingLog ? "Update" : "Add Log"}
                                 </button>  
                             ) : 
 
                             (data.status === "currently reading" && isAdding) && 
-
                                 LogForm
-
                             }                
                         </>
                     )   
