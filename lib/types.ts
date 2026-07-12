@@ -42,7 +42,14 @@ export interface BookInfoData {
     priority_order?: number,
     prioritycolor?: string,
     user_books_uid: string,
-    thoughts?: BookThought[]
+    thoughts?: BookThought[],
+    logs?: BookLog[]
+}
+interface BookLog {
+  books_logs_uid: string,
+  date_logged: string,
+  start_page: number,
+  end_page: number
 }
 
 export interface BooksReadListViewData {
@@ -106,6 +113,10 @@ export interface ReadingLog {
   start_page: number,
   end_page: number,
   user_books_uid: string
+}
+
+export interface ReadingLogData {
+  logs: ReadingLog[];
 }
 
 export type ModalProps = {

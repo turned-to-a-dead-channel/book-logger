@@ -15,8 +15,8 @@ const QuotesList = ({ data } : { data: BookInfoData }) => {
 
     const userBooksuid = data.user_books_uid;
     const pageSize = 3;
-    const paginated = data.quotes!.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
-    const numOfPages = Math.ceil(data.quotes!.length / pageSize);    
+    const paginated = data.quotes?.slice(currentPage * pageSize, (currentPage + 1) * pageSize) ?? [];
+    const numOfPages = Math.ceil((data.quotes?.length ?? 0) / pageSize);    
     const numOfPagesArr = Array.from({ length: numOfPages }, (_, i) => i + 1);
 
     const handleClose = () => {

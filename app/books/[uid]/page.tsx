@@ -1,3 +1,4 @@
+import LogsList from '@/components/books/LogsList';
 import ThoughtsList from '@/components/books/ThoughtsList';
 import QuotesList from '@/components/books/QuotesList';
 import { getBookDetailByUid } from "@/lib/queries/books";
@@ -131,6 +132,9 @@ const BookPage = async ({ params } : { params: Promise<{ uid: string }> }) => {
                 </div>
 
                 {/* ***** READING LOGS ******************************************************** */}
+                    <LogsList data={ bookDetail } />
+                    
+                    {/*
                     <div className="mt-10">
                         <h1 className="text-3xl font-serif text-textlight border-b border-edge mb-2">Logs</h1>
                             {    
@@ -156,31 +160,10 @@ const BookPage = async ({ params } : { params: Promise<{ uid: string }> }) => {
                             <div className="text-center text-xs text-muted font-mono tracking-wider-than-widest uppercase mt-2">No logs yet</div>
                             }
                     </div>
+                    */}
 
                 <ThoughtsList data={bookDetail} />
-
-                {/* ***** QUOTES ************************************************************** */}
                 <QuotesList data={bookDetail} />
-                {/*
-                <div className="mt-10">
-                    <h1 className="text-3xl font-serif text-textlight border-b border-edge mb-5">Quotes</h1>
-                        {
-                        bookDetail.quotes ? 
-                            <div className="mb-6">
-                                {
-                                    bookDetail.quotes.map((quote: any, index: number) => (
-                                        <div className={`mb-10 font-serif text-xl text-textlight mx-auto max-w-4/5 pb-10 tracking-wide ${index < (bookDetail.quotes.length - 1) && 'border-b border-edge'}`} key={`${quote.books_quotes_uid}`}>
-                                            <span className="text-amber-500">&ldquo;&nbsp;</span>
-                                            {quote.quote}
-                                            <span className="text-amber-500">&nbsp;&rdquo;</span>
-                                        </div>
-                                    ))
-                                }
-                            </div> :
-                            <div className="text-center text-xs text-muted font-mono tracking-wider-than-widest uppercase mt-2">No quotes yet</div>
-                        }
-                </div>
-                */}
             </div>
         </div>
     )

@@ -32,14 +32,15 @@ export async function getBookDetailByUid(uid: string) {
       upl.priority, upl.color, 
       json_agg(DISTINCT bq.*) FILTER (WHERE bq.books_quotes_id IS NOT NULL) AS quotes,
       json_agg(DISTINCT bl.*) FILTER (WHERE bl.books_logs_id IS NOT NULL) AS logs,
-      json_agg(DISTINCT bt.*) FILTER (WHERE bt.books_thoughts_id IS NOT NULL) AS thoughts,
+      (SELECT json_agg(bt.* ORDER BY bt.books_thoughts_id) 
+      FROM books_thoughts bt 
+      WHERE bt.bt_ub_id = ub.user_books_id) AS thoughts,
       json_agg(DISTINCT br.*) FILTER (WHERE br.books_reviews_id IS NOT NULL) AS reviews
     FROM user_books ub 
     JOIN books b ON b.book_id = ub.book_id
     LEFT JOIN user_prioritylabels upl ON upl.id = ub.priority_label_id
     LEFT JOIN books_quotes bq ON bq.bq_ub_id = ub.user_books_id
     LEFT JOIN books_log bl ON bl.bl_ub_id = ub.user_books_id
-    LEFT JOIN books_thoughts bt on bt.bt_ub_id = ub.user_books_id
     LEFT JOIN books_reviews br on br.br_ub_id = ub.user_books_id
     WHERE ub.user_books_uid = $1
     GROUP BY b.book_id, ub.user_books_id, upl.id

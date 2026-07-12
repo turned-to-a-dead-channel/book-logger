@@ -18,7 +18,7 @@ const ThoughtsList = ({ data } : { data: BookInfoData }) => {
         setThought('');
         setPageRef('');
         setAddThought(false);
-        setEditingThought("");
+        setEditingThought('');
     }
 
     const thoughtForm = ( 
@@ -89,7 +89,7 @@ const ThoughtsList = ({ data } : { data: BookInfoData }) => {
                                     :
                                         <div className="group flex flex-row" key={`${bookThought.books_thoughts_uid}`}>
                                             <div className="mt-2 w-4/5 font-mono text-lg text-muted group">
-                                                {bookThought.thought}
+                                                &middot; {bookThought.thought}
 
                                                 {bookThought.page && (<span className="ml-1 text-xs">{`(${bookThought.page})`}</span>)}
                                             </div>
@@ -124,7 +124,7 @@ const ThoughtsList = ({ data } : { data: BookInfoData }) => {
                             {
                                 !addThought ? 
 
-                                    <button className="mt-5 cursor-pointer border border-dashed border-muted text-sm uppercase w-1/4 text-muted p-2 font-mono tracking-wider-than-widest hover:border-solid hover:border-amber-500 hover:text-amber-500 hover:bg-amber-500/10 transform duration-300" onClick={() => setAddThought(true)}>
+                                    <button className="mt-5 mb-5 cursor-pointer border border-dashed border-muted text-sm uppercase w-1/4 text-muted p-2 font-mono tracking-wider-than-widest hover:border-solid hover:border-amber-500 hover:text-amber-500 hover:bg-amber-500/10 transform duration-300" onClick={() => setAddThought(true)}>
                                         Add Thought
                                     </button> 
                                 : 
